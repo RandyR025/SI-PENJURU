@@ -1,6 +1,6 @@
 @extends('backend/layouts.template')
 @section('titlepage')
-Data Pengisian Dari Penilaian {{$penilaian[0]->nama_penilaian}}
+Data Pilihan Dari Pengisian {{$pengisian[0]->nama_pengisian}}
 @endsection
 @section('title')
 Kelola Data
@@ -19,7 +19,7 @@ Kelola Data
 <div class="col-sm-12 col-md-7 col-lg-9 col-xxl-10 mb-1" style="">
   <div class="d-inline-block me-0 me-sm-3 float-start float-md-none" style="margin-left: 300px;">
     <!-- Add Button Start -->
-    <a href="#" class="btn btn-icon btn-icon-only btn-foreground-alternate shadow add-datatable" data-bs-toggle="modal" data-bs-placement="top" type="button" data-bs-delay="0" titte data-bs-original-title="Add" data-bs-target="#AddPengisianModal">
+    <a href="#" class="btn btn-icon btn-icon-only btn-foreground-alternate shadow add-datatable" data-bs-toggle="modal" data-bs-placement="top" type="button" data-bs-delay="0" titte data-bs-original-title="Add" data-bs-target="#AddPilihanModal">
       <i data-cs-icon="plus"></i>
     </a>
     <!-- Add Button End -->
@@ -57,31 +57,26 @@ Kelola Data
       <thead>
         <tr>
           <th>No</th>
-          <th>Kode Pengisian</th>
-          <th>Nama Pengisian</th>
-          <th>Nama Subkriteria</th>
-          <th>Id Penilaian</th>
+          <th>Kode Pilihan</th>
+          <th>Nama Pilihan</th>
+          <th>Points</th>
           <th class="#"></th>
         </tr>
       </thead>
       <tbody>
-      @foreach ($pengisian as $item)
+      @foreach ($pilihan as $item)
       <tr>
           <td>{{ $no++ }}</td>
-          <td>{{ $item->kode_pengisian }}</td>
-          <td>{{ $item->nama_pengisian }}</td>
-          <td>{{ $item->nama_subkriteria }}</td>
-          <td>{{ $item->id_penilaian }}</td>
+          <td>{{ $item->kode_pilihan }}</td>
+          <td>{{ $item->nama_pilihan }}</td>
+          <td>{{ $item->points }}</td>
           <td>
-          <button value="{{ $item->kode_pengisian }}" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 edit_pengisian" type="button" data-bs-placement="top" titte data-bs-original-title="Edit" data-bs-toggle="tooltip">
+          <button value="{{ $item->kode_pilihan }}" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 edit_pilihan" type="button" data-bs-placement="top" titte data-bs-original-title="Edit" data-bs-toggle="tooltip">
           <i class="fa-solid fa-pen-to-square"></i>
           </button>
-            <button value="{{ $item->kode_pengisian }}" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 delete_pengisian" type="button" data-bs-toggle="tooltip" data-bs-placement="top" titte data-bs-original-title="Hapus">
+            <button value="{{ $item->kode_pilihan }}" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 delete_pilihan" type="button" data-bs-toggle="tooltip" data-bs-placement="top" titte data-bs-original-title="Hapus">
             <i class="fa-solid fa-trash-can"></i>
             </button>
-          <a href="/show-pilihan/{{ $item->kode_pengisian }}" value="{{ $item->kode_pengisian }}" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 view_pengisian" data-bs-toggle="tooltip" data-bs-placement="top" titte data-bs-original-title="View">
-            <i class="fa-solid fa-list"></i>
-          </a>
           </td>
         </tr>
       @endforeach
@@ -94,48 +89,43 @@ Kelola Data
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit Kriteria</h5>
+        <h5 class="modal-title">Edit Pilihan</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="modal-body">
-          <form action="" id="pengisian_form">
+          <form action="" id="pilihan_form">
             <div class="mb-3" hidden>
-              <label class="form-label">Id Penilaian</label>
-              <input id="edit_id" type="text" class="id_penilaian form-control" value="" name="id_penilaian" />
-              <span class="text-danger error-text id_penilaian_error"></span>
+              <label class="form-label">Kode Pengisian</label>
+              <input id="edit_id" type="text" class="id_penilaian form-control" value="" name="kode_pengisian" />
+              <span class="text-danger error-text kode_pengisian_error"></span>
             </div>
             <div class="mb-3">
-              <label class="form-label">Kode Pengisian</label>
-              <input id="edit_kodepengisian" type="text" class="kode_pengisian form-control" value="" name="kode_pengisian" />
-              <span class="text-danger error-text kode_pengisian_error"></span>
+              <label class="form-label">Kode Pilihan</label>
+              <input id="edit_kodepilihan" type="text" class="kode_pilihan form-control" value="" name="kode_pilihan" />
+              <span class="text-danger error-text kode_pilihan_error"></span>
             </div>
             <!-- <div class="mb-3">
               <label class="form-label">Kode Sub Kriteria</label>
               <input id="edit_kodesubkriteria" type="text" class="kodesubkriteria form-control" value="" name="kode_subkriteria" />
               <span class="text-danger error-text kode_subkriteria_error"></span>
             </div> -->
+
             <div class="mb-3">
-              <label class="form-label">Nama Subkriteria</label>
-              <div>
-                <select name="kode_subkriteria" class="kode_subkriteria form-control" id="edit_kodesubkriteria">
-                @foreach ($subkriteria as $item)
-                  <option value="{{ $item->kode_subkriteria }}">{{ $item->nama_subkriteria }}</option>
-                @endforeach
-                </select>
-              </div>
-              <span class="text-danger error-text kode_subkriteria_error"></span>
+              <label class="form-label">Nama Pilihan</label>
+              <input id="edit_namapilihan" type="text" class="nama_pilihan form-control" value="" name="nama_pilihan" />
+              <span class="text-danger error-text nama_pilihan_error"></span>
             </div>
             <div class="mb-3">
-              <label class="form-label">Nama Pengisian</label>
-              <input id="edit_namapengisian" type="text" class="namapengisian form-control" value="" name="nama_pengisian" />
-              <span class="text-danger error-text nama_pengisian_error"></span>
+              <label class="form-label">Points</label>
+              <input id="edit_points" type="text" class="points form-control" value="" name="points" />
+              <span class="text-danger error-text points_error"></span>
             </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary update_pengisian">Save changes</button>
+        <button type="submit" class="btn btn-primary update_pilihan">Save changes</button>
       </div>
       </form>
     </div>
@@ -143,47 +133,42 @@ Kelola Data
 </div>
 
 
-<div class="modal fade modal-close-out" id="AddPengisianModal" role="dialog" aria-hidden="true">
+<div class="modal fade modal-close-out" id="AddPilihanModal" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable mt-3">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Tambah Pengguna</h5>
+        <h5 class="modal-title">Tambah Pilihan</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="modal-body">
-          <form action="{{ route('pengisian.store') }}" method="post" id="main_form">
+          <form action="{{ route('pilihan.store') }}" method="post" id="main_form">
             @csrf
             <div class="mb-3" hidden>
-              <label class="form-label">Id Penilaian</label>
-              <input name="id_penilaian" type="text" class="id_penilaian form-control" value="{{$penilaian[0]->id_penilaian}}" />
-              <span class="text-danger error-text id_penilaian_error"></span>
+              <label class="form-label">Kode Pengisian</label>
+              <input name="kode_pengisian" type="text" class="kode_pengisian form-control" value="{{$pengisian[0]->kode_pengisian}}" />
+              <span class="text-danger error-text kode_pengisian_error"></span>
             </div>
             <div class="mb-3">
-              <label class="form-label">Kode Pengisian</label>
-              <input name="kode_pengisian" type="text" class="kode_pengisian form-control" />
-              <span class="text-danger error-text kode_pengisian_error"></span>
+              <label class="form-label">Kode Pilihan</label>
+              <input name="kode_pilihan" type="text" class="kode_pilihan form-control" />
+              <span class="text-danger error-text kode_pilihan_error"></span>
             </div>
             <!-- <div class="mb-3">
               <label class="form-label">Kode Sub Kriteria</label>
               <input name="kode_subkriteria" type="text" class="kode_subkriteria form-control" />
               <span class="text-danger error-text kode_subkriteria_error"></span>
             </div> -->
+            
             <div class="mb-3">
-              <label class="form-label">Nama Subkriteria</label>
-              <div>
-                <select name="kode_subkriteria" class="kode_subkriteria form-control" id="edit_kodesubkriteria">
-                @foreach ($subkriteria as $item)
-                  <option value="{{ $item->kode_subkriteria }}">{{ $item->nama_subkriteria }}</option>
-                @endforeach
-                </select>
-              </div>
-              <span class="text-danger error-text kode_subkriteria_error"></span>
+              <label class="form-label">Name Pilihan</label>
+              <input name="nama_pilihan" type="text" class="nama_pilihan form-control" />
+              <span class="text-danger error-text nama_pilihan_error"></span>
             </div>
             <div class="mb-3">
-              <label class="form-label">Name Pengisian</label>
-              <input name="nama_pengisian" type="text" class="nama_pengisian form-control" />
-              <span class="text-danger error-text nama_pengisian_error"></span>
+              <label class="form-label">Points</label>
+              <input name="points" type="text" class="points form-control" />
+              <span class="text-danger error-text points_error"></span>
             </div>
 
 
@@ -191,7 +176,7 @@ Kelola Data
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary add_pengisian">Save changes</button>
+        <button type="submit" class="btn btn-primary add_pilihan">Save changes</button>
       </div>
       </form>
     </div>
@@ -210,14 +195,14 @@ Kelola Data
         <div class="modal-body">
           <form action="" id="edit_form">
             <div class="mb-3">
-              <input id="delete_pengisian_id" type="hidden" class="name form-control" value="" />
+              <input id="delete_pilihan_id" type="hidden" class="name form-control" value="" />
             </div>
             <h4 style="font-size: 30px;">Anda Yakin ??? Ingin Menghapus Data Ini ???</h4>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary delete_pengisian_btn">Delete</button>
+        <button type="submit" class="btn btn-primary delete_pilihan_btn">Delete</button>
       </div>
       </form>
     </div>
@@ -251,5 +236,5 @@ Kelola Data
     new $.fn.dataTable.FixedHeader(table);
   });
 </script>
-<script src="{{asset('js/Pengisian.js')}}"></script>
+<script src="{{asset('js/Pilihan.js')}}"></script>
 @endsection

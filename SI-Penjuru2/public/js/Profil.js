@@ -31,6 +31,9 @@ $(document).on("submit", "#profile_form", function (e) {
                 $("#saveform_errList").html("");
                 $("#success_message").addClass("alert alert-success");
                 $("#success_message").text(response.message);
+                setTimeout(function(){
+                    window.location.reload();
+                 }, 2000);
             }
         },
     });
@@ -70,6 +73,9 @@ $(document).on("submit", "#profileguru_form", function (e) {
                 $("#saveform_errList").html("");
                 $("#success_message").addClass("alert alert-success");
                 $("#success_message").text(response.message);
+                setTimeout(function(){
+                    window.location.reload();
+                 }, 2000);
             }
         },
     });
