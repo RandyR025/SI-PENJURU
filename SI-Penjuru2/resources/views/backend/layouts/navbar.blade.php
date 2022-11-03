@@ -3,7 +3,7 @@
 @if (auth()->user()->level == "admin")
   <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     @if (isset($admin->image))
-    <img class="profile" alt="profile" src="{{asset('images/'.$admin->image)}}" style="min-height: 40px !important; height: 90%!important; max-height: 100px!important; min-width: 40px !important; width: 90%!important; max-width: 100px;" />
+    <img class="profile" alt="profile" src="{{asset('images/'.$admin->image)}}" style="min-height: 40px !important; height: 90%!important; max-height: 100px!important; min-width: 40px !important; width: 30%!important; max-width: 100px;" />
     @else
     <img class="profile" alt="profile" src="{{asset('backend/img/profile/profile-9.jpg')}}" style="min-height: 40px !important; height: 90%!important; max-height: 100px!important; min-width: 40px !important; width: 90%!important; max-width: 100px;" />
     @endif
@@ -13,7 +13,7 @@
 @if (auth()->user()->level == "guru")
   <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   @if (isset($guru->image))
-    <img class="profile" alt="profile" src="{{asset('images/'.$guru->image)}}" style="min-height: 40px !important; height: 90%!important; max-height: 100px!important; min-width: 40px !important; width: 90%!important; max-width: 100px;" />
+    <img class="profile" alt="profile" src="{{asset('images/'.$guru->image)}}" style="" />
     @else
     <img class="profile" alt="profile" src="{{asset('backend/img/profile/profile-9.jpg')}}" style="min-height: 40px !important; height: 90%!important; max-height: 100px!important; min-width: 40px !important; width: 90%!important; max-width: 100px;" />
     @endif
@@ -23,7 +23,7 @@
 @if (auth()->user()->level == "wali")
   <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   @if (isset($wali->image))
-    <img class="profile" alt="profile" src="{{asset('images/'.$wali->image)}}" style="min-height: 40px !important; height: 90%!important; max-height: 100px!important; min-width: 40px !important; width: 90%!important; max-width: 100px;" />
+    <img class="profile" alt="profile" src="{{asset('images/'.$wali->image)}}" style="min-height: 40px !important; height: 90%!important; max-height: 100px!important; min-width: 40px !important; width: 30%!important; max-width: 100px;" />
     @else
     <img class="profile" alt="profile" src="{{asset('backend/img/profile/profile-9.jpg')}}" style="min-height: 40px !important; height: 90%!important; max-height: 100px!important; min-width: 40px !important; width: 90%!important; max-width: 100px;" />
     @endif

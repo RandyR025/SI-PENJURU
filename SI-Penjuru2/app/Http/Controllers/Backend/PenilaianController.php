@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kriteria;
+use App\Models\Penilaian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class KriteriaController extends Controller
+class PenilaianController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class KriteriaController extends Controller
         $admin = DB::table('admin')->join('users', 'admin.user_id', '=', 'users.id')->find(Auth::user()->id);
         $guru = DB::table('guru')->join('users', 'guru.user_id', '=', 'users.id')->find(Auth::user()->id);
         $wali = DB::table('wali')->join('users', 'wali.user_id', '=', 'users.id')->find(Auth::user()->id);
-        return view('backend/admin.data_kriteria', compact('admin','guru', 'wali'));
+        return view('backend/admin.data_penilaian', compact('admin', 'guru', 'wali'));
     }
 
     /**
@@ -43,8 +43,8 @@ class KriteriaController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'kode_kriteria' => 'required|max:10',
-            'nama_kriteria' => 'required|max:30',
+            'id_penilaian' => 'required|max:10',
+            'nama_penilaian' => 'required|max:30',
             
         ]);
         if ($validator->fails()) {
@@ -53,10 +53,10 @@ class KriteriaController extends Controller
                 'errors' => $validator->messages(),
             ]);
         } else {
-            $kriteria = new Kriteria;
-            $kriteria->kode_kriteria = $request->input('kode_kriteria');
-            $kriteria->nama_kriteria = $request->input('nama_kriteria');
-            $kriteria->save();
+            $penilaian = new Penilaian;
+            $penilaian->id_penilaian = $request->input('id_penilaian');
+            $penilaian->nama_penilaian = $request->input('nama_penilaian');
+            $penilaian->save();
 
             return response()->json([
                 'status' => 200,
@@ -84,11 +84,11 @@ class KriteriaController extends Controller
      */
     public function edit($id)
     {
-        $kriteria = DB::table('kriteria')->where('kode_kriteria',$id)->get();
-        if ($kriteria) {
+        $penilaian = DB::table('penilaian')->where('id_penilaian',$id)->get();
+        if ($penilaian) {
             return response()->json([
                 'status' => 200,
-                'kriteria' => $kriteria,
+                'penilaian' => $penilaian,
             ]);
         } else {
             return response()->json([
@@ -108,8 +108,8 @@ class KriteriaController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'kode_kriteria' => 'required',
-            'nama_kriteria' => 'required',
+            'id_penilaian' => 'required',
+            'nama_penilaian' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -117,11 +117,11 @@ class KriteriaController extends Controller
                 'errors' => $validator->messages(),
             ]);
         } else {
-            $kriteria = DB::table('kriteria')->where('kode_kriteria',$id);
-            if ($kriteria) {
-                $kriteria->update([
-                    'kode_kriteria' => $request->kode_kriteria,
-                    'nama_kriteria' => $request->nama_kriteria,
+            $penilaian = DB::table('penilaian')->where('id_penilaian',$id);
+            if ($penilaian) {
+                $penilaian->update([
+                    'id_penilaian' => $request->id_penilaian,
+                    'nama_penilaian' => $request->nama_penilaian,
                 
                 
                 ]);
@@ -129,7 +129,7 @@ class KriteriaController extends Controller
                     'status' => 200,
                     'message' => "Data Berhasil Di Perbarui !!!",
                     'id' => $id,
-                    'kriteria' => $kriteria
+                    'penilaian' => $penilaian
                 ]);
             } else {
                 return response()->json([
@@ -148,7 +148,7 @@ class KriteriaController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('kriteria')->where('kode_kriteria',$id)->delete();
+        DB::table('penilaian')->where('id_penilaian',$id)->delete();
         return response()->json([
             'status' => 200,
             'message' => 'Data Berhasil Di Hapus !!!',
@@ -156,11 +156,12 @@ class KriteriaController extends Controller
     }
 
 
-    public function fetchkriteria()
+    public function fetchpenilaian()
     {
-        $kriteria = Kriteria::all();
+        $penilaian = Penilaian::all();
         return response()->json([
-            'kriteria' => $kriteria,
+            'penilaian' => $penilaian,
         ]);
     }
+    
 }

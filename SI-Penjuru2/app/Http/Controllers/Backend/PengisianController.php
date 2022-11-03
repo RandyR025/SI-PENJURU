@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kriteria;
+use App\Models\Pengisian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class KriteriaController extends Controller
+class PengisianController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class KriteriaController extends Controller
         $admin = DB::table('admin')->join('users', 'admin.user_id', '=', 'users.id')->find(Auth::user()->id);
         $guru = DB::table('guru')->join('users', 'guru.user_id', '=', 'users.id')->find(Auth::user()->id);
         $wali = DB::table('wali')->join('users', 'wali.user_id', '=', 'users.id')->find(Auth::user()->id);
-        return view('backend/admin.data_kriteria', compact('admin','guru', 'wali'));
+        return view('backend/admin.data_pengisian', compact('admin','guru', 'wali'));
     }
 
     /**
@@ -43,8 +43,8 @@ class KriteriaController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'kode_kriteria' => 'required|max:10',
-            'nama_kriteria' => 'required|max:30',
+            'id_penilaian' => 'required|max:10',
+            'kode_pengisian' => 'required|max:10|unique:pengisian'
             
         ]);
         if ($validator->fails()) {
@@ -53,10 +53,12 @@ class KriteriaController extends Controller
                 'errors' => $validator->messages(),
             ]);
         } else {
-            $kriteria = new Kriteria;
-            $kriteria->kode_kriteria = $request->input('kode_kriteria');
-            $kriteria->nama_kriteria = $request->input('nama_kriteria');
-            $kriteria->save();
+            $pengisian = new Pengisian;
+            $pengisian->id_penilaian = $request->input('id_penilaian');
+            $pengisian->kode_pengisian = $request->input('kode_pengisian');
+            $pengisian->nama_pengisian = $request->input('nama_pengisian');
+            $pengisian->kode_subkriteria = $request->input('kode_subkriteria');
+            $pengisian->save();
 
             return response()->json([
                 'status' => 200,
@@ -73,7 +75,15 @@ class KriteriaController extends Controller
      */
     public function show($id)
     {
-        //
+        $pengisian = DB::table('pengisian')->join('penilaian', 'pengisian.id_penilaian', '=', 'penilaian.id_penilaian')->where('penilaian.id_penilaian',$id)->join('subkriteria', 'pengisian.kode_subkriteria', '=', 'subkriteria.kode_subkriteria')->get();
+        $penilaian = DB::table('penilaian')->where('id_penilaian', $id)->get();
+        $subkriteria = DB::table('subkriteria')->get();
+        $admin = DB::table('admin')->join('users', 'admin.user_id', '=', 'users.id')->find(Auth::user()->id);
+        $guru = DB::table('guru')->join('users', 'guru.user_id', '=', 'users.id')->find(Auth::user()->id);
+        $wali = DB::table('wali')->join('users', 'wali.user_id', '=', 'users.id')->find(Auth::user()->id);
+        $no = 1;
+        // dd($pengisian);
+        return view('backend/admin.data_pengisian', compact('admin','guru', 'wali', 'pengisian', 'no', 'penilaian','subkriteria'));
     }
 
     /**
@@ -84,11 +94,11 @@ class KriteriaController extends Controller
      */
     public function edit($id)
     {
-        $kriteria = DB::table('kriteria')->where('kode_kriteria',$id)->get();
-        if ($kriteria) {
+        $pengisian = DB::table('pengisian')->where('pengisian.kode_pengisian',$id)->get();
+        if ($pengisian) {
             return response()->json([
                 'status' => 200,
-                'kriteria' => $kriteria,
+                'pengisian' => $pengisian,
             ]);
         } else {
             return response()->json([
@@ -108,8 +118,9 @@ class KriteriaController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'kode_kriteria' => 'required',
-            'nama_kriteria' => 'required',
+            'kode_pengisian' => 'required',
+            'nama_pengisian' => 'required',
+            'kode_subkriteria' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -117,19 +128,18 @@ class KriteriaController extends Controller
                 'errors' => $validator->messages(),
             ]);
         } else {
-            $kriteria = DB::table('kriteria')->where('kode_kriteria',$id);
-            if ($kriteria) {
-                $kriteria->update([
-                    'kode_kriteria' => $request->kode_kriteria,
-                    'nama_kriteria' => $request->nama_kriteria,
+            $pengisian = DB::table('pengisian')->where('pengisian.kode_pengisian',$id);
+            if ($pengisian) {
+                $pengisian->update([
+                    'kode_pengisian' => $request->kode_pengisian,
+                    'nama_pengisian' => $request->nama_pengisian,
+                    'kode_subkriteria' => $request->kode_subkriteria,
                 
                 
                 ]);
                 return response()->json([
                     'status' => 200,
                     'message' => "Data Berhasil Di Perbarui !!!",
-                    'id' => $id,
-                    'kriteria' => $kriteria
                 ]);
             } else {
                 return response()->json([
@@ -148,19 +158,10 @@ class KriteriaController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('kriteria')->where('kode_kriteria',$id)->delete();
+        DB::table('pengisian')->where('kode_pengisian',$id)->delete();
         return response()->json([
             'status' => 200,
             'message' => 'Data Berhasil Di Hapus !!!',
-        ]);
-    }
-
-
-    public function fetchkriteria()
-    {
-        $kriteria = Kriteria::all();
-        return response()->json([
-            'kriteria' => $kriteria,
         ]);
     }
 }

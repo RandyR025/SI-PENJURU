@@ -6,6 +6,9 @@ use App\Http\Controllers\Backend\DataGuruController;
 use App\Http\Controllers\Backend\DataPenggunaController;
 use App\Http\Controllers\Backend\KriteriaController;
 use App\Http\Controllers\Backend\LoginController;
+use App\Http\Controllers\Backend\PengisianController;
+use App\Http\Controllers\Backend\PenilaianController;
+use App\Http\Controllers\Backend\PilihanController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SubkriteriaController;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +69,35 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/datasubkriteria', [SubkriteriaController::class, 'store'])->name('subkriteria.store');
         Route::delete('/delete-subkriteria/{id}',[SubkriteriaController::class, 'destroy']);
         /* End Data Subkriteria */
+
+        /* Start Data Penilaian */
+        Route::get('/datapenilaian', [PenilaianController::class, 'index'])->name('datapenilaian');
+        Route::post('/datapenilaian', [PenilaianController::class, 'store'])->name('penilaian.store');
+        Route::get('/fetch-penilaian', [PenilaianController::class, 'fetchpenilaian']);
+        Route::get('/edit-penilaian/{id}',[PenilaianController::class, 'edit'])->name('editpenilaian');
+        Route::post('/update-penilaian/{id}',[PenilaianController::class, 'update'])->name('update.penilaian');
+        Route::delete('/delete-penilaian/{id}',[PenilaianController::class, 'destroy']);
+        /* End Data Penilaian */
+
+        /* Start Data Pengisian */
+        Route::get('/datapengisian', [PengisianController::class, 'index'])->name('datapengisian');
+        Route::get('/show-pengisian/{id}',[PengisianController::class, 'show'])->name('showpengisian');
+        Route::get('/fetch-pengisian/{id}', [PengisianController::class, 'fetchpengisian']);
+        Route::get('/edit-pengisian/{id}',[PengisianController::class, 'edit'])->name('editpengisian');
+        Route::post('/update-pengisian/{id}',[PengisianController::class, 'update'])->name('update.pengisian');
+        Route::post('/datapengisian', [PengisianController::class, 'store'])->name('pengisian.store');
+        Route::delete('/delete-pengisian/{id}',[PengisianController::class, 'destroy']);        
+        /* End Data Pengisian */
+
+        /* Start Data Pilihan */
+        Route::get('/datapilihan', [PilihanController::class, 'index'])->name('datapilihan');
+        Route::get('/show-pilihan/{id}',[PilihanController::class, 'show'])->name('showpilihan');
+        Route::get('/fetch-pilihan/{id}', [PilihanController::class, 'fetchpilihan']);
+        Route::get('/edit-pilihan/{id}',[PilihanController::class, 'edit'])->name('editpilihan');
+        Route::post('/update-pilihan/{id}',[PilihanController::class, 'update'])->name('update.pilihan');
+        Route::post('/datapilihan', [PilihanController::class, 'store'])->name('pilihan.store');
+        Route::delete('/delete-pilihan/{id}',[PilihanController::class, 'destroy']);
+        /* End Data Pilihan */
     });
     Route::group(['middleware' => ['cek_login:guru']], function () {
         Route::get('/dashboardguru', [DashboardController::class, 'index'])->name('dashboardguru');

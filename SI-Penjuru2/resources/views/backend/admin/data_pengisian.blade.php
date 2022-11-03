@@ -1,6 +1,6 @@
 @extends('backend/layouts.template')
 @section('titlepage')
-Data Sub Kriteria Dari Kriteria {{$kriteria[0]->nama_kriteria}}
+Data Pengisian Dari Penilaian {{$penilaian[0]->nama_penilaian}}
 @endsection
 @section('title')
 Kelola Data
@@ -19,7 +19,7 @@ Kelola Data
 <div class="col-sm-12 col-md-7 col-lg-9 col-xxl-10 mb-1" style="">
   <div class="d-inline-block me-0 me-sm-3 float-start float-md-none" style="margin-left: 300px;">
     <!-- Add Button Start -->
-    <a href="#" class="btn btn-icon btn-icon-only btn-foreground-alternate shadow add-datatable" data-bs-toggle="modal" data-bs-placement="top" type="button" data-bs-delay="0" titte data-bs-original-title="Add" data-bs-target="#AddKriteriaModal">
+    <a href="#" class="btn btn-icon btn-icon-only btn-foreground-alternate shadow add-datatable" data-bs-toggle="modal" data-bs-placement="top" type="button" data-bs-delay="0" titte data-bs-original-title="Add" data-bs-target="#AddPengisianModal">
       <i data-cs-icon="plus"></i>
     </a>
     <!-- Add Button End -->
@@ -57,26 +57,31 @@ Kelola Data
       <thead>
         <tr>
           <th>No</th>
-          <th>Kode Kriteria</th>
-          <th>Kode Sub Kriteria</th>
-          <th>Nama Sub Kriteria</th>
+          <th>Kode Pengisian</th>
+          <th>Nama Pengisian</th>
+          <th>Nama Subkriteria</th>
+          <th>Id Penilaian</th>
           <th class="#"></th>
         </tr>
       </thead>
       <tbody>
-      @foreach ($subkriteria as $item)
+      @foreach ($pengisian as $item)
       <tr>
           <td>{{ $no++ }}</td>
-          <td>{{ $item->kode_kriteria }}</td>
-          <td>{{ $item->kode_subkriteria }}</td>
+          <td>{{ $item->kode_pengisian }}</td>
+          <td>{{ $item->nama_pengisian }}</td>
           <td>{{ $item->nama_subkriteria }}</td>
+          <td>{{ $item->id_penilaian }}</td>
           <td>
-          <button value="{{ $item->kode_subkriteria }}" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 edit_subkriteria" type="button" data-bs-placement="top" titte data-bs-original-title="Edit" data-bs-toggle="tooltip">
+          <button value="{{ $item->kode_pengisian }}" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 edit_pengisian" type="button" data-bs-placement="top" titte data-bs-original-title="Edit" data-bs-toggle="tooltip">
           <i class="fa-solid fa-pen-to-square"></i>
           </button>
-            <button value="{{ $item->kode_subkriteria }}" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 delete_subkriteria" type="button" data-bs-toggle="tooltip" data-bs-placement="top" titte data-bs-original-title="Hapus">
+            <button value="{{ $item->kode_pengisian }}" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 delete_pengisian" type="button" data-bs-toggle="tooltip" data-bs-placement="top" titte data-bs-original-title="Hapus">
             <i class="fa-solid fa-trash-can"></i>
             </button>
+          <a href="/show-pilihan/{{ $item->kode_pengisian }}" value="{{ $item->kode_pengisian }}" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 view_kriteria" data-bs-toggle="tooltip" data-bs-placement="top" titte data-bs-original-title="View">
+            <i class="fa-solid fa-list"></i>
+          </a>
           </td>
         </tr>
       @endforeach
@@ -94,29 +99,43 @@ Kelola Data
       </div>
       <div class="modal-body">
         <div class="modal-body">
-          <form action="" id="subkriteria_form">
+          <form action="" id="pengisian_form">
             <div class="mb-3" hidden>
-              <label class="form-label">Kode Kriteria</label>
-              <input id="edit_id" type="text" class="name form-control" value="" name="kode_kriteria" />
-              <span class="text-danger error-text kode_kriteria_error"></span>
+              <label class="form-label">Id Penilaian</label>
+              <input id="edit_id" type="text" class="id_penilaian form-control" value="" name="id_penilaian" />
+              <span class="text-danger error-text id_penilaian_error"></span>
             </div>
             <div class="mb-3">
+              <label class="form-label">Kode Pengisian</label>
+              <input id="edit_kodepengisian" type="text" class="kode_pengisian form-control" value="" name="kode_pengisian" />
+              <span class="text-danger error-text kode_pengisian_error"></span>
+            </div>
+            <!-- <div class="mb-3">
               <label class="form-label">Kode Sub Kriteria</label>
               <input id="edit_kodesubkriteria" type="text" class="kodesubkriteria form-control" value="" name="kode_subkriteria" />
               <span class="text-danger error-text kode_subkriteria_error"></span>
-
+            </div> -->
+            <div class="mb-3">
+              <label class="form-label">Nama Subkriteria</label>
+              <div>
+                <select name="kode_subkriteria" class="kode_subkriteria form-control" id="edit_kodesubkriteria">
+                @foreach ($subkriteria as $item)
+                  <option value="{{ $item->kode_subkriteria }}">{{ $item->nama_subkriteria }}</option>
+                @endforeach
+                </select>
+              </div>
+              <span class="text-danger error-text kode_subkriteria_error"></span>
             </div>
             <div class="mb-3">
-              <label class="form-label">Name</label>
-              <input id="edit_namasubkriteria" type="text" class="namesubkriteria form-control" value="" name="nama_subkriteria" />
-              <span class="text-danger error-text nama_subkriteria_error"></span>
-
+              <label class="form-label">Nama Pengisian</label>
+              <input id="edit_namapengisian" type="text" class="namapengisian form-control" value="" name="nama_pengisian" />
+              <span class="text-danger error-text nama_pengisian_error"></span>
             </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary update_kriteria">Save changes</button>
+        <button type="submit" class="btn btn-primary update_pengisian">Save changes</button>
       </div>
       </form>
     </div>
@@ -124,7 +143,7 @@ Kelola Data
 </div>
 
 
-<div class="modal fade modal-close-out" id="AddKriteriaModal" role="dialog" aria-hidden="true">
+<div class="modal fade modal-close-out" id="AddPengisianModal" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable mt-3">
     <div class="modal-content">
       <div class="modal-header">
@@ -133,22 +152,38 @@ Kelola Data
       </div>
       <div class="modal-body">
         <div class="modal-body">
-          <form action="{{ route('subkriteria.store') }}" method="post" id="main_form">
+          <form action="{{ route('pengisian.store') }}" method="post" id="main_form">
             @csrf
             <div class="mb-3" hidden>
-              <label class="form-label">Kode Kriteria</label>
-              <input name="kode_kriteria" type="text" class="kode_kriteria form-control" value="{{$kriteria[0]->kode_kriteria}}" />
-              <span class="text-danger error-text kode_kriteria_error"></span>
+              <label class="form-label">Id Penilaian</label>
+              <input name="id_penilaian" type="text" class="id_penilaian form-control" value="{{$penilaian[0]->id_penilaian}}" />
+              <span class="text-danger error-text id_penilaian_error"></span>
             </div>
             <div class="mb-3">
+              <label class="form-label">Kode Pengisian</label>
+              <input name="kode_pengisian" type="text" class="kode_pengisian form-control" />
+              <span class="text-danger error-text kode_pengisian_error"></span>
+            </div>
+            <!-- <div class="mb-3">
               <label class="form-label">Kode Sub Kriteria</label>
               <input name="kode_subkriteria" type="text" class="kode_subkriteria form-control" />
               <span class="text-danger error-text kode_subkriteria_error"></span>
+            </div> -->
+            <div class="mb-3">
+              <label class="form-label">Nama Subkriteria</label>
+              <div>
+                <select name="kode_subkriteria" class="kode_subkriteria form-control" id="edit_kodesubkriteria">
+                @foreach ($subkriteria as $item)
+                  <option value="{{ $item->kode_subkriteria }}">{{ $item->nama_subkriteria }}</option>
+                @endforeach
+                </select>
+              </div>
+              <span class="text-danger error-text kode_subkriteria_error"></span>
             </div>
             <div class="mb-3">
-              <label class="form-label">Name Sub Kriteria</label>
-              <input name="nama_subkriteria" type="text" class="nama_subkriteria form-control" />
-              <span class="text-danger error-text nama_subkriteria_error"></span>
+              <label class="form-label">Name Pengisian</label>
+              <input name="nama_pengisian" type="text" class="nama_pengisian form-control" />
+              <span class="text-danger error-text nama_pengisian_error"></span>
             </div>
 
 
@@ -156,7 +191,7 @@ Kelola Data
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary add_pengguna">Save changes</button>
+        <button type="submit" class="btn btn-primary add_pengisian">Save changes</button>
       </div>
       </form>
     </div>
@@ -175,14 +210,14 @@ Kelola Data
         <div class="modal-body">
           <form action="" id="edit_form">
             <div class="mb-3">
-              <input id="delete_subkriteria_id" type="hidden" class="name form-control" value="" />
+              <input id="delete_pengisian_id" type="hidden" class="name form-control" value="" />
             </div>
             <h4 style="font-size: 30px;">Anda Yakin ??? Ingin Menghapus Data Ini ???</h4>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary delete_subkriteria_btn">Delete</button>
+        <button type="submit" class="btn btn-primary delete_pengisian_btn">Delete</button>
       </div>
       </form>
     </div>
@@ -195,6 +230,7 @@ Kelola Data
   $(document).ready(function() {
     var table = $('#datatable').DataTable({
       responsive: true
+      // scrollX: true
     });
 
     /* table.on('click', '.edit', function (){
@@ -215,5 +251,5 @@ Kelola Data
     new $.fn.dataTable.FixedHeader(table);
   });
 </script>
-<script src="{{asset('js/Subkriteria.js')}}"></script>
+<script src="{{asset('js/Pengisian.js')}}"></script>
 @endsection

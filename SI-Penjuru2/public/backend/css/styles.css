@@ -11395,6 +11395,9 @@ html[data-placement='vertical'] .nav-container {
       html[data-placement='vertical'] .nav-container .language-switch-container .language-button:hover {
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03) !important;
         background: rgba(255, 255, 255, 0.05); }
+        html[data-placement='horizontal'] .nav-container .logo img {
+          margin-left: none;
+        }
   html[data-placement='horizontal'] .nav-container .logo img,
   html[data-placement='horizontal'] .nav-container .logo .img,
   html[data-placement='vertical'] .nav-container .logo img,
@@ -11697,8 +11700,8 @@ html[data-placement='vertical'] .nav-container.mobile-side-ready {
         html[data-placement='horizontal'] .nav-container.mobile-side-ready .nav-content .user-container .user .profile,
         html[data-placement='vertical'] .nav-container.mobile-side-ready .nav-content .user-container .user .profile {
           order: initial;
-          width: 50px;
-          height: 50px;
+          width: 100px;
+          height: 100px;
           margin-bottom: 5px; }
       html[data-placement='vertical'] .nav-container .nav-content .user-container .dropdown-menu,
       html[data-placement='horizontal'] .nav-container.mobile-side-ready .nav-content .user-container .dropdown-menu,
@@ -11784,7 +11787,9 @@ html[data-placement='vertical'] .nav-container.mobile-side-ready {
 @media (max-width: 1199.98px) {
   html[data-placement='horizontal']:not([data-mobile='true']) .menu-icons .user .name,
   html[data-placement='horizontal']:not([data-mobile='true']) .user-container .user .name {
-    display: none; } }
+    display: none; }
+  html[data-placement='horizontal']:not([data-mobile='true']) .imghilang {
+      margin-left: 15px !important; } }
 
 html[data-placement='horizontal']:not([data-mobile='true']) .menu-icons .dropdown-menu,
 html[data-placement='horizontal']:not([data-mobile='true']) .user-container .dropdown-menu,
@@ -11900,6 +11905,12 @@ html[data-placement='vertical'][data-behaviour='unpinned'][data-menu-animate='sh
 html[data-placement='vertical'][data-behaviour='unpinned'][data-menu-animate='show'] .nav-container .nav-content .menu-container .menu a .label {
   transition: opacity var(--transition-time); }
 
+  html[data-placement='vertical'][data-behaviour='unpinned'][data-menu-animate='hidden'] .menghilang {
+    display: none;
+  }
+  html[data-placement='vertical'][data-behaviour='unpinned'][data-menu-animate='hidden'] .imghilang {
+    margin-left:-30px !important;
+  }
 html[data-placement='vertical'][data-behaviour='unpinned'][data-menu-animate='hidden'] .nav-container {
   transition-duration: var(--transition-time);
   transition-property: width; }

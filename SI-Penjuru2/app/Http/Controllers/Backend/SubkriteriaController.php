@@ -92,7 +92,7 @@ class SubkriteriaController extends Controller
      */
     public function edit($id)
     {
-        $subkriteria = DB::table('subkriteria')->join('kriteria', 'subkriteria.kode_kriteria', '=', 'kriteria.kode_kriteria')->where('kriteria.kode_kriteria',$id)->get();
+        $subkriteria = DB::table('subkriteria')->where('subkriteria.kode_subkriteria',$id)->get();
         if ($subkriteria) {
             return response()->json([
                 'status' => 200,
@@ -125,7 +125,7 @@ class SubkriteriaController extends Controller
                 'errors' => $validator->messages(),
             ]);
         } else {
-            $subkriteria = DB::table('subkriteria')->join('kriteria', 'subkriteria.kode_kriteria', '=', 'kriteria.kode_kriteria')->where('kriteria.kode_kriteria',$id);
+            $subkriteria = DB::table('subkriteria')->where('subkriteria.kode_subkriteria',$id);
             if ($subkriteria) {
                 $subkriteria->update([
                     'kode_subkriteria' => $request->kode_subkriteria,

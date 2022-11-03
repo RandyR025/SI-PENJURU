@@ -1,25 +1,25 @@
-fetchkriteria();
-function fetchkriteria() {
+fetchpenilaian();
+function fetchpenilaian() {
   $.ajax({
     type: "GET",
-    url: "/fetch-kriteria",
+    url: "/fetch-penilaian",
     dataType: "json",
     success: function(response){
       // console.log(response.user);
       $('tbody').html("");
-      $.each(response.kriteria, function(key, item){
+      $.each(response.penilaian, function(key, item){
         $('tbody').append('<tr>\
           <td>'+(key+1)+'</td>\
-          <td>'+item.kode_kriteria+'</td>\
-          <td>'+item.nama_kriteria+'</td>\
+          <td>'+item.id_penilaian+'</td>\
+          <td>'+item.nama_penilaian+'</td>\
           <td>\
-          <button value="' +item.kode_kriteria + '" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 edit_kriteria" type="button" data-bs-placement="top" titte data-bs-original-title="Edit" data-bs-toggle="tooltip">\
+          <button value="' +item.id_penilaian + '" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 edit_penilaian" type="button" data-bs-placement="top" titte data-bs-original-title="Edit" data-bs-toggle="tooltip">\
           <i class="fa-solid fa-pen-to-square"></i>\
           </button>\
-            <button value="'+item.kode_kriteria+'" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 delete_kriteria" type="button" data-bs-toggle="tooltip" data-bs-placement="top" titte data-bs-original-title="Hapus">\
+            <button value="'+item.id_penilaian+'" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 delete_penilaian" type="button" data-bs-toggle="tooltip" data-bs-placement="top" titte data-bs-original-title="Hapus">\
             <i class="fa-solid fa-trash-can"></i>\
             </button>\
-            <a href="/show-subkriteria/'+item.kode_kriteria +'" value="'+item.kode_kriteria +'" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 view_kriteria" data-bs-toggle="tooltip" data-bs-placement="top" titte data-bs-original-title="View">\
+            <a href="/show-pengisian/'+item.id_penilaian +'" value="'+item.id_penilaian +'" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1 view_penilaian" data-bs-toggle="tooltip" data-bs-placement="top" titte data-bs-original-title="View">\
             <i class="fa-regular fa-eye"></i>\
             </a>\
           </td>\
@@ -64,9 +64,9 @@ $(function(){
             $('#saveform_errList').html("")
             $('#success_message').addClass('alert alert-success')
             $('#success_message').text(response.message)
-            $('#AddKriteriaModal').modal('hide');
-            $('#AddKriteriaModal').find('input').val("");
-            fetchkriteria();
+            $('#AddPenilaianModal').modal('hide');
+            $('#AddPenilaianModal').find('input').val("");
+            fetchpenilaian();
 
           }
 
@@ -77,16 +77,16 @@ $(function(){
 
 
   /* Edit Data Pengguna */
-$(document).on('click', '.edit_kriteria', function(e){
+$(document).on('click', '.edit_penilaian', function(e){
     e.preventDefault();
-    var kriteria_id = $(this).val();
+    var penilaian_id = $(this).val();
    /*  console.log(user_id); */
   
   
    $('#editModal').modal('show');
    $.ajax({
     type: "GET",
-    url: "/edit-kriteria/"+kriteria_id,
+    url: "/edit-penilaian/"+penilaian_id,
     success: function(response){
       console.log(response);
       if(response.status == 404){
@@ -94,9 +94,9 @@ $(document).on('click', '.edit_kriteria', function(e){
         $('#success_message').addClass("alert alert-danger");
         $('#success_message').text(response.message);
       }else{
-        $('#edit_id').val(kriteria_id);
-        $('#hidden_id').val(kriteria_id);
-        $('#edit_namakriteria').val(response.kriteria[0].nama_kriteria);
+        $('#edit_id').val(penilaian_id);
+        $('#hidden_id').val(penilaian_id);
+        $('#edit_namapenilaian').val(response.penilaian[0].nama_penilaian);
       }
     }
    });
@@ -104,7 +104,7 @@ $(document).on('click', '.edit_kriteria', function(e){
 
 
   /* Update Data Pengguna */
-$(document).on("submit", "#kriteria_form", function (e) {
+$(document).on("submit", "#penilaian_form", function (e) {
   e.preventDefault();
     $.ajaxSetup({
       headers: {
@@ -112,12 +112,12 @@ $(document).on("submit", "#kriteria_form", function (e) {
       }
   });
 
-  var kriteria_id = $("#hidden_id").val();
-  let EditformData = new FormData($("#kriteria_form")[0]);
+  var penilaian_id = $("#hidden_id").val();
+  let EditformData = new FormData($("#penilaian_form")[0]);
 
   $.ajax({
       type: "POST",
-      url: "/update-kriteria/" + kriteria_id,
+      url: "/update-penilaian/" + penilaian_id,
       data: EditformData,
       contentType: false,
       processData: false,
@@ -138,7 +138,7 @@ $(document).on("submit", "#kriteria_form", function (e) {
               $("#success_message").text(response.message);
               $("#editModal").modal("hide");
               $("#editModal").find("input").val("");
-              fetchkriteria();
+              fetchpenilaian();
           }
       },
   });
@@ -146,16 +146,16 @@ $(document).on("submit", "#kriteria_form", function (e) {
 
 
 /* Delete Data Pengguna */
-$(document).on("click", ".delete_kriteria", function (e) {
+$(document).on("click", ".delete_penilaian", function (e) {
   e.preventDefault();
-  var kriteria_id = $(this).val();
+  var penilaian_id = $(this).val();
   /* alert(user_id); */
-  $("#delete_kriteria_id").val(kriteria_id);
+  $("#delete_penilaian_id").val(penilaian_id);
   $("#deleteModal").modal("show");
 });
-$(document).on("click", ".delete_kriteria_btn", function (e) {
+$(document).on("click", ".delete_penilaian_btn", function (e) {
   e.preventDefault();
-  var kriteria_id = $("#delete_kriteria_id").val();
+  var penilaian_id = $("#delete_penilaian_id").val();
 
   $.ajaxSetup({
       headers: {
@@ -164,13 +164,13 @@ $(document).on("click", ".delete_kriteria_btn", function (e) {
   });
   $.ajax({
       type: "DELETE",
-      url: "/delete-kriteria/" + kriteria_id,
+      url: "/delete-penilaian/" + penilaian_id,
       success: function (response) {
           console.log(response);
           $("#success_message").addClass("alert alert-success");
           $("#success_message").text(response.message);
           $("#deleteModal").modal("hide");
-          fetchkriteria();
+          fetchpenilaian();
       },
   });
 });

@@ -35,7 +35,7 @@
     </li>
     @if (auth()->user()->level == "admin")
     <li>
-      <a href="#apps" data-href="Apps.html" class="{{ Route::is('datapengguna')||Route::is('dataguru')||Route::is('datakriteria')||Route::is('showkriteria') ? 'active' : '' }}">
+      <a href="#apps" data-href="Apps.html" class="{{ Route::is('datapengguna')||Route::is('dataguru')||Route::is('datakriteria')||Route::is('showkriteria')||Route::is('datapenilaian') ? 'active' : '' }}">
         <i data-cs-icon="screen" class="icon" data-cs-size="18"></i>
         <span class="label">Kelola Data</span>
       </a>
@@ -65,6 +65,12 @@
             <span class="label">Data Sub Kriteria</span>
           </a>
         </li> -->
+        
+        <li>
+          <a href="{{route('datapenilaian')}}" class="{{ Route::is('datapenilaian') ? 'active' : '' }}">
+            <span class="label">Data Penilaian</span>
+          </a>
+        </li>
       </ul>
     </li>
     <li>

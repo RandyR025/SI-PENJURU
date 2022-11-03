@@ -73,7 +73,7 @@
             <!-- <img src="img/logo/logo-white.svg" alt="logo" /> -->
 
             <!-- Or added via css to provide different ones for different color themes -->
-            <div class="d-flex align-items-center"><img src="{{asset('backend/img/logo/penjuru.png')}}" alt="" style=" width: 80px; margin-left: -70px;"><strong style="color: white; font-size: 30px;">PENJURU</strong></div>
+            <div class="d-flex align-items-center"><img class="imghilang" src="{{asset('backend/img/logo/penjuru.png')}}" alt="" style=" width: 80px; margin-left: -70px;"><strong class="menghilang" style="color: white; font-size: 30px;">PENJURU</strong></div>
           </a>
         </div>
         <!-- Logo End -->

@@ -128,6 +128,15 @@
                     </span>
                     @enderror
                   </div>
+                  <!-- <div class="mb-3 filled form-group tooltip-end-top">
+                    <i data-cs-icon="user"></i>
+                    <input class="form-control @error('nik') is-invalid @enderror" placeholder="nik" name="nik" />
+                    @error('nik')
+                    <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                  </div> -->
                   <div class="mb-3 position-relative form-group">
                     <div class="form-check">
                       <input type="checkbox" class="form-check-input" id="registerCheck" name="registerCheck" />

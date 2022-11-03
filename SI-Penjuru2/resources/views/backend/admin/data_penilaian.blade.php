@@ -1,6 +1,6 @@
 @extends('backend/layouts.template')
 @section('titlepage')
-Data Kriteria
+Data Penilaian
 @endsection
 @section('title')
 Kelola Data
@@ -19,7 +19,7 @@ Kelola Data
 <div class="col-sm-12 col-md-7 col-lg-9 col-xxl-10 mb-1" style="">
   <div class="d-inline-block me-0 me-sm-3 float-start float-md-none" style="margin-left: 300px;">
     <!-- Add Button Start -->
-    <a href="#" class="btn btn-icon btn-icon-only btn-foreground-alternate shadow add-datatable" data-bs-toggle="modal" data-bs-placement="top" type="button" data-bs-delay="0" titte data-bs-original-title="Add" data-bs-target="#AddKriteriaModal">
+    <a href="#" class="btn btn-icon btn-icon-only btn-foreground-alternate shadow add-datatable" data-bs-toggle="modal" data-bs-placement="top" type="button" data-bs-delay="0" titte data-bs-original-title="Add" data-bs-target="#AddPenilaianModal">
       <i data-cs-icon="plus"></i>
     </a>
     <!-- Add Button End -->
@@ -57,8 +57,8 @@ Kelola Data
       <thead>
         <tr>
           <th>No</th>
-          <th>Kode kriteria</th>
-          <th>Nama Kriteria</th>
+          <th>Id Penilaian</th>
+          <th>Nama Penilaian</th>
           <th class="#"></th>
         </tr>
       </thead>
@@ -72,33 +72,33 @@ Kelola Data
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit Kriteria</h5>
+        <h5 class="modal-title">Edit Penilaian</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="modal-body">
-          <form action="" id="kriteria_form">
+          <form action="" id="penilaian_form">
           <div class="mb-3 d-none">
-              <label class="form-label">Kode Kriteria</label>
-              <input id="hidden_id" type="text" class="name form-control" value="" name="kode_kriteria" />
-              <span class="text-danger error-text kode_kriteria_error"></span>
+              <label class="form-label">Kode Penilaian</label>
+              <input id="hidden_id" type="text" class="id_penilaian form-control" value="" name="id_penilaian" />
+              <span class="text-danger error-text id_penilaian_error"></span>
             </div>
             <div class="mb-3">
-              <label class="form-label">Kode Kriteria</label>
-              <input id="edit_id" type="text" class="kode_kriteria form-control" value="" name="kode_kriteria" />
-              <span class="text-danger error-text kode_kriteria_error"></span>
+              <label class="form-label">Kode Penilaian</label>
+              <input id="edit_id" type="text" class="id_penilaian form-control" value="" name="id_penilaian" />
+              <span class="text-danger error-text id_penilaian_error"></span>
             </div>
             <div class="mb-3">
-              <label class="form-label">Name</label>
-              <input id="edit_namakriteria" type="text" class="nama_kriteria form-control" value="" name="nama_kriteria" />
-              <span class="text-danger error-text nama_kriteria_error"></span>
+              <label class="form-label">Nama Penilaian</label>
+              <input id="edit_namapenilaian" type="text" class="nama_penilaian form-control" value="" name="nama_penilaian" />
+              <span class="text-danger error-text nama_penilaian_error"></span>
 
             </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary update_kriteria">Save changes</button>
+        <button type="submit" class="btn btn-primary update_penilaian">Save changes</button>
       </div>
       </form>
     </div>
@@ -106,26 +106,26 @@ Kelola Data
 </div>
 
 
-<div class="modal fade modal-close-out" id="AddKriteriaModal" role="dialog" aria-hidden="true">
+<div class="modal fade modal-close-out" id="AddPenilaianModal" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable mt-3">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Tambah Kriteria</h5>
+        <h5 class="modal-title">Tambah Penilaian</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="modal-body">
-          <form action="{{ route('kriteria.store') }}" method="post" id="main_form">
+          <form action="{{ route('penilaian.store') }}" method="post" id="main_form">
             @csrf
             <div class="mb-3">
-              <label class="form-label">Kode Kriteria</label>
-              <input name="kode_kriteria" type="text" class="kode_kriteria form-control" />
-              <span class="text-danger error-text kode_kriteria_error"></span>
+              <label class="form-label">Kode Penilaian</label>
+              <input name="id_penilaian" type="text" class="id_penilaian form-control" />
+              <span class="text-danger error-text id_penilaian_error"></span>
             </div>
             <div class="mb-3">
-              <label class="form-label">Name Kriteria</label>
-              <input name="nama_kriteria" type="text" class="nama_kriteria form-control" />
-              <span class="text-danger error-text nama_kriteria_error"></span>
+              <label class="form-label">Nama Penilaian</label>
+              <input name="nama_penilaian" type="text" class="nama_penilaian form-control" />
+              <span class="text-danger error-text nama_penilaian_error"></span>
             </div>
 
 
@@ -133,7 +133,7 @@ Kelola Data
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary add_pengguna">Save changes</button>
+        <button type="submit" class="btn btn-primary add_penilaian">Save changes</button>
       </div>
       </form>
     </div>
@@ -152,14 +152,14 @@ Kelola Data
         <div class="modal-body">
           <form action="" id="edit_form">
             <div class="mb-3">
-              <input id="delete_kriteria_id" type="hidden" class="name form-control" value="" />
+              <input id="delete_penilaian_id" type="hidden" class="id_penilaian form-control" value="" />
             </div>
             <h4 style="font-size: 30px;">Anda Yakin ??? Ingin Menghapus Data Ini ???</h4>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary delete_kriteria_btn">Delete</button>
+        <button type="submit" class="btn btn-primary delete_penilaian_btn">Delete</button>
       </div>
       </form>
     </div>
@@ -192,5 +192,5 @@ Kelola Data
     new $.fn.dataTable.FixedHeader(table);
   });
 </script>
-<script src="{{asset('js/Kriteria.js')}}"></script>
+<script src="{{asset('js/Penilaian.js')}}"></script>
 @endsection
