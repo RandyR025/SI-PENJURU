@@ -29,11 +29,25 @@ $(document).on("submit", "#profile_form", function (e) {
                 });
             } else {
                 $("#saveform_errList").html("");
-                $("#success_message").addClass("alert alert-success");
-                $("#success_message").text(response.message);
+                // $("#success_message").addClass("alert alert-success");
+                // $("#success_message").text(response.message);
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                      confirmButton: 'btn btn-success',
+                      
+                    },
+                    buttonsStyling: false
+                  })
+                  swalWithBootstrapButtons.fire({
+                    title: 'Berhasil',
+                    text: "Data Telah Di Perbarui !!!",
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                    reverseButtons: true
+                  })
                 setTimeout(function(){
                     window.location.reload();
-                 }, 2000);
+                 }, 1000);
             }
         },
     });
@@ -71,11 +85,25 @@ $(document).on("submit", "#profileguru_form", function (e) {
                 });
             } else {
                 $("#saveform_errList").html("");
-                $("#success_message").addClass("alert alert-success");
-                $("#success_message").text(response.message);
+                // $("#success_message").addClass("alert alert-success");
+                // $("#success_message").text(response.message);
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                      confirmButton: 'btn btn-success',
+                      
+                    },
+                    buttonsStyling: false
+                  })
+                  swalWithBootstrapButtons.fire({
+                    title: 'Berhasil',
+                    text: "Data Telah Di Perbarui !!!",
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                    reverseButtons: true
+                  })
                 setTimeout(function(){
                     window.location.reload();
-                 }, 2000);
+                 }, 1000);
             }
         },
     });

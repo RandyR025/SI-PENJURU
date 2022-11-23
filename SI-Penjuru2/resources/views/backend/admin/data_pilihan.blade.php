@@ -237,4 +237,5 @@ Kelola Data
   });
 </script>
 <script src="{{asset('js/Pilihan.js')}}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

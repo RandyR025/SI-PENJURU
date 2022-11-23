@@ -91,8 +91,22 @@
                 });
               } else {
                 $("#saveform_errList").html("");
-                $("#success_message").addClass("alert alert-success");
-                $("#success_message").text(response.message);
+                // $("#success_message").addClass("alert alert-success");
+                // $("#success_message").text(response.message);
+                const swalWithBootstrapButtons = Swal.mixin({
+                  customClass: {
+                    confirmButton: 'btn btn-success',
+                    
+                  },
+                  buttonsStyling: false
+                })
+                swalWithBootstrapButtons.fire({
+                  title: 'Berhasil',
+                  text: "Data Telah Di Perbarui !!!",
+                  icon: 'success',
+                  confirmButtonText: 'Ok',
+                  reverseButtons: true
+                })
                 $("#editModal").modal("hide");
                 $("#editModal").find("input").val("");
                 setTimeout(function(){
@@ -135,8 +149,22 @@
             });
           } else {
             $('#saveform_errList').html("")
-            $('#success_message').addClass('alert alert-success')
-            $('#success_message').text(response.message)
+            // $('#success_message').addClass('alert alert-success')
+            // $('#success_message').text(response.message)
+            const swalWithBootstrapButtons = Swal.mixin({
+              customClass: {
+                confirmButton: 'btn btn-success',
+                
+              },
+              buttonsStyling: false
+            })
+            swalWithBootstrapButtons.fire({
+              title: 'Berhasil',
+              text: "Data Telah Di Tambahkan !!!",
+              icon: 'success',
+              confirmButtonText: 'Ok',
+              reverseButtons: true
+            })
             $('#AddPilihanModal').modal('hide');
             $('#AddPilihanModal').find('input').val("");
             setTimeout(function(){
@@ -150,33 +178,92 @@
     });
   });
   /* Delete Data Pilihan */
+  // $(document).on("click", ".delete_pilihan", function (e) {
+  //   e.preventDefault();
+  //   var pilihan_id = $(this).val();
+  //   /* alert(user_id); */
+  //   $("#delete_pilihan_id").val(pilihan_id);
+  //   $("#deleteModal").modal("show");
+  // });
+  // $(document).on("click", ".delete_pilihan_btn", function (e) {
+  //   e.preventDefault();
+  //   var pilihan_id = $("#delete_pilihan_id").val();
+  
+  //   $.ajaxSetup({
+  //       headers: {
+  //           "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+  //       },
+  //   });
+  //   $.ajax({
+  //       type: "DELETE",
+  //       url: "/delete-pilihan/" + pilihan_id,
+  //       success: function (response) {
+  //           console.log(response);
+  //           $("#success_message").addClass("alert alert-success");
+  //           $("#success_message").text(response.message);
+  //           $("#deleteModal").modal("hide");
+  //           setTimeout(function(){
+  //             window.location.reload();
+  //          }, 500);
+  //       },
+  //   });
+  // });
+
+
   $(document).on("click", ".delete_pilihan", function (e) {
     e.preventDefault();
     var pilihan_id = $(this).val();
-    /* alert(user_id); */
-    $("#delete_pilihan_id").val(pilihan_id);
-    $("#deleteModal").modal("show");
-  });
-  $(document).on("click", ".delete_pilihan_btn", function (e) {
-    e.preventDefault();
-    var pilihan_id = $("#delete_pilihan_id").val();
-  
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-    });
-    $.ajax({
-        type: "DELETE",
-        url: "/delete-pilihan/" + pilihan_id,
-        success: function (response) {
-            console.log(response);
-            $("#success_message").addClass("alert alert-success");
-            $("#success_message").text(response.message);
-            $("#deleteModal").modal("hide");
-            setTimeout(function(){
-              window.location.reload();
-           }, 500);
-        },
-    });
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger',
+      },
+      buttonsStyling: true
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Yakin Hapus Data?',
+      text: "Anda Tidak Akan Dapat Mengembalikan Data Ini!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, Hapus!',
+      cancelButtonText: 'Batal!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajaxSetup({
+          headers: {
+              "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+          },
+      });
+      $.ajax({
+          type: "DELETE",
+          url: "/delete-pilihan/" + pilihan_id,
+          success: function (response) {
+              console.log(response);
+              $("#success_message").addClass("alert alert-success");
+              $("#success_message").text(response.message);
+              $("#deleteModal").modal("hide");
+              setTimeout(function(){
+                window.location.reload();
+             }, 500);
+          },
+      });
+        
+        swalWithBootstrapButtons.fire(
+          'Berhasil!',
+          'Data Telah Di Hapus',
+          'success'
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Batal',
+          'Data Anda Aman :D',
+          'error'
+        )
+      }
+    })
   });

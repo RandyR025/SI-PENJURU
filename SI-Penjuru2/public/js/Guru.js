@@ -156,34 +156,92 @@ function fetchguru() {
 }
 
 /* Delete Data Pengguna */
+// $(document).on("click", ".delete_guru", function (e) {
+//     e.preventDefault();
+//     var guru_id = $(this).val();
+//     /* alert(user_id); */
+//     $("#delete_guru_id").val(guru_id);
+//     $("#deleteModal").modal("show");
+// });
+// $(document).on("click", ".delete_guru_btn", function (e) {
+//     e.preventDefault();
+//     var guru_id = $("#delete_guru_id").val();
+
+//     $.ajaxSetup({
+//         headers: {
+//             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+//         },
+//     });
+//     $.ajax({
+//         type: "DELETE",
+//         url: "/delete-guru/" + guru_id,
+//         success: function (response) {
+//             console.log(response);
+//             $("#success_message").addClass("alert alert-success");
+//             $("#success_message").text(response.message);
+//             $("#deleteModal").modal("hide");
+//             fetchguru();
+//         },
+//     });
+// });
+
+
 $(document).on("click", ".delete_guru", function (e) {
     e.preventDefault();
     var guru_id = $(this).val();
-    /* alert(user_id); */
-    $("#delete_guru_id").val(guru_id);
-    $("#deleteModal").modal("show");
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger',
+        },
+        buttonsStyling: true
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: 'Yakin Hapus Data?',
+        text: "Anda Tidak Akan Dapat Mengembalikan Data Ini!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+            });
+            $.ajax({
+                type: "DELETE",
+                url: "/delete-guru/" + guru_id,
+                success: function (response) {
+                    console.log(response);
+                    // $("#success_message").addClass("alert alert-success");
+                    // $("#success_message").text(response.message);
+                    $("#deleteModal").modal("hide");
+                    fetchguru();
+                },
+            });
+          
+          swalWithBootstrapButtons.fire(
+            'Berhasil!',
+            'Data Telah Di Hapus',
+            'success'
+          )
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Batal',
+            'Data Anda Aman :D',
+            'error'
+          )
+        }
+      })
 });
-$(document).on("click", ".delete_guru_btn", function (e) {
-    e.preventDefault();
-    var guru_id = $("#delete_guru_id").val();
 
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-    });
-    $.ajax({
-        type: "DELETE",
-        url: "/delete-guru/" + guru_id,
-        success: function (response) {
-            console.log(response);
-            $("#success_message").addClass("alert alert-success");
-            $("#success_message").text(response.message);
-            $("#deleteModal").modal("hide");
-            fetchguru();
-        },
-    });
-});
 
 /* Edit Data Pengguna */
 $(document).on("click", ".edit_guru", function (e) {
@@ -324,8 +382,22 @@ $(document).on("submit", "#guru_form", function (e) {
                 });
             } else {
                 $("#saveform_errList").html("");
-                $("#success_message").addClass("alert alert-success");
-                $("#success_message").text(response.message);
+                // $("#success_message").addClass("alert alert-success");
+                // $("#success_message").text(response.message);
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                      confirmButton: 'btn btn-success',
+                      
+                    },
+                    buttonsStyling: false
+                  })
+                  swalWithBootstrapButtons.fire({
+                    title: 'Berhasil',
+                    text: "Data Telah Di Perbarui !!!",
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                    reverseButtons: true
+                  })
                 $("#editModal").modal("hide");
                 $("#editModal").find("input").val("");
                 fetchguru();

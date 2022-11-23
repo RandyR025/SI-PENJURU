@@ -21,8 +21,10 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "@sweetalert2/theme-bulma": "^5.0.13",
         "datatables.net": "^1.12.1",
         "datatables.net-dt": "^1.12.1",
-        "jquery-validation": "^1.19.5"
+        "jquery-validation": "^1.19.5",
+        "sweetalert2": "^11.6.5"
     }
 }

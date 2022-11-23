@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\KriteriaController;
 use App\Http\Controllers\Backend\LoginController;
 use App\Http\Controllers\Backend\PengisianController;
 use App\Http\Controllers\Backend\PenilaianController;
+use App\Http\Controllers\Backend\PenilaianKinerjaGuruController;
 use App\Http\Controllers\Backend\PilihanController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SubkriteriaController;
@@ -103,6 +104,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/dashboardguru', [DashboardController::class, 'index'])->name('dashboardguru');
         Route::get('/profileguru', [ProfileController::class, 'index'])->name('profileguru');
         Route::post('/profileguru/{id}',[ProfileController::class, 'update'])->name('updateprofileguru');
+        Route::get('/penilaiankinerjaguru',[PenilaianKinerjaGuruController::class, 'index'])->name('penilaiankinerjaguru');
+        Route::get('/detailkinerjaguru/{id}',[PenilaianKinerjaGuruController::class, 'show'])->name('detailkinerjaguru');
     });
 });
 Route::get('/masukLogin', [LoginController::class, 'index'])->name('masuklogin');

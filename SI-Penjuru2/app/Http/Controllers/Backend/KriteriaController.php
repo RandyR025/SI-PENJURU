@@ -43,7 +43,7 @@ class KriteriaController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'kode_kriteria' => 'required|max:10',
+            'kode_kriteria' => 'required|max:10|unique:kriteria',
             'nama_kriteria' => 'required|max:30',
             
         ]);

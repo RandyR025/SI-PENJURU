@@ -38,12 +38,14 @@ Setting
         <label class="col-lg-2 col-md-3 col-sm-4 col-form-label">Name</label>
         <div class="col-sm-8 col-md-9 col-lg-10">
           <input id="edit_name" name="name" type="text" class="form-control" value="{{ Auth::user()->name }}" />
+          <span class="text-danger error-text name_error"></span>
         </div>
       </div>
       <div class="mb-3 row">
         <label class="col-lg-2 col-md-3 col-sm-4 col-form-label">Email</label>
         <div class="col-sm-8 col-md-9 col-lg-10">
           <input id="edit_email" name="email" type="email" class="form-control" value="{{ Auth::user()->email }}" />
+          <span class="text-danger error-text email_error"></span>
         </div>
       </div>
       <div class="mb-3 row">
@@ -57,8 +59,10 @@ Setting
         <div class="col-sm-8 col-md-9 col-lg-10">
           @if(isset($admin->nik))
           <input id="edit_nik" name="nik" type="text" class="form-control" value="{{ $admin->nik }}" />
+          <span class="text-danger error-text nik_error"></span>
           @else
           <input id="edit_nik" name="nik" type="text" class="form-control" value="" />
+          <span class="text-danger error-text nik_error"></span>
           @endif
         </div>
       </div>
@@ -67,8 +71,10 @@ Setting
         <div class="col-sm-8 col-md-9 col-lg-10">
           @if(isset($admin->tanggal_lahir))
           <input id="edit_tanggallahir" name="tanggal_lahir" type="date" class="form-control date-picker-close" id="birthday" value="{{ $admin->tanggal_lahir }}" />
+          <span class="text-danger error-text tanggal_lahir_error"></span>
           @else
           <input id="edit_tanggallahir" name="tanggal_lahir" type="date" class="form-control date-picker-close" id="birthday" value="" />
+          <span class="text-danger error-text tanggal_lahir_error"></span>
           @endif
         </div>
       </div>
@@ -77,8 +83,10 @@ Setting
         <div class="col-sm-8 col-md-9 col-lg-10">
           @if(isset($admin->tempat_lahir))
           <input id="edit_tempatlahir" name="tempat_lahir" type="text" class="form-control" value="{{ $admin->tempat_lahir }}" />
+          <span class="text-danger error-text tempat_lahir_error"></span>
           @else
           <input id="edit_tempatlahir" name="tempat_lahir" type="text" class="form-control" value="" />
+          <span class="text-danger error-text tempat_lahir_error"></span>
           @endif
         </div>
       </div>
@@ -108,8 +116,10 @@ Setting
         <div class="col-sm-8 col-md-9 col-lg-10">
           @if(isset($admin->alamat))
           <textarea class="form-control" rows="3" name="alamat" id="edit_alamat">{{ $admin->alamat }}</textarea>
+          <span class="text-danger error-text alamat_error"></span>
           @else
           <textarea class="form-control" rows="3" name="alamat" id="edit_alamat"></textarea>
+          <span class="text-danger error-text alamat_error"></span>
           @endif
         </div>
       </div>
@@ -118,8 +128,10 @@ Setting
         <div class="col-sm-8 col-md-9 col-lg-10">
           @if(isset($admin->no_telp))
           <input id="edit_notelp" type="text" class="form-control" value="{{ $admin->no_telp }}" name="no_telp" />
+          <span class="text-danger error-text no_telp_error"></span>
           @else
           <input id="edit_notelp" type="text" class="form-control" value="" name="no_telp" />
+          <span class="text-danger error-text no_telp_error"></span>
           @endif
         </div>
       </div>
@@ -170,12 +182,14 @@ Setting
         <label class="col-lg-2 col-md-3 col-sm-4 col-form-label">Name</label>
         <div class="col-sm-8 col-md-9 col-lg-10">
           <input id="edit_name" name="name" type="text" class="form-control" value="{{ Auth::user()->name }}" />
+          <span class="text-danger error-text name_error"></span>
         </div>
       </div>
       <div class="mb-3 row">
         <label class="col-lg-2 col-md-3 col-sm-4 col-form-label">Email</label>
         <div class="col-sm-8 col-md-9 col-lg-10">
           <input id="edit_email" name="email" type="email" class="form-control" value="{{ Auth::user()->email }}" />
+          <span class="text-danger error-text name_error"></span>
         </div>
       </div>
       <div class="mb-3 row">
@@ -189,8 +203,10 @@ Setting
         <div class="col-sm-8 col-md-9 col-lg-10">
           @if(isset($guru->nik))
           <input id="edit_nik" name="nik" type="text" class="form-control" value="{{ $guru->nik }}" />
+          <span class="text-danger error-text nik_error"></span>
           @else
           <input id="edit_nik" name="nik" type="text" class="form-control" value="" />
+          <span class="text-danger error-text nik_error"></span>
           @endif
         </div>
       </div>
@@ -199,8 +215,10 @@ Setting
         <div class="col-sm-8 col-md-9 col-lg-10">
           @if(isset($guru->tanggal_lahir))
           <input id="edit_tanggallahir" name="tanggal_lahir" type="date" class="form-control date-picker-close" id="birthday" value="{{ $guru->tanggal_lahir }}" />
+          <span class="text-danger error-text tanggal_lahir__error"></span>
           @else
           <input id="edit_tanggallahir" name="tanggal_lahir" type="date" class="form-control date-picker-close" id="birthday" value="" />
+          <span class="text-danger error-text tanggal_lahir__error"></span>
           @endif
         </div>
       </div>
@@ -209,8 +227,10 @@ Setting
         <div class="col-sm-8 col-md-9 col-lg-10">
           @if(isset($guru->tempat_lahir))
           <input id="edit_tempatlahir" name="tempat_lahir" type="text" class="form-control" value="{{ $guru->tempat_lahir }}" />
+          <span class="text-danger error-text tempat_lahir__error"></span>
           @else
           <input id="edit_tempatlahir" name="tempat_lahir" type="text" class="form-control" value="" />
+          <span class="text-danger error-text tempat_lahir_error"></span>
           @endif
         </div>
       </div>
@@ -240,8 +260,10 @@ Setting
         <div class="col-sm-8 col-md-9 col-lg-10">
           @if(isset($guru->alamat))
           <textarea class="form-control" rows="3" name="alamat" id="edit_alamat">{{ $guru->alamat }}</textarea>
+          <span class="text-danger error-text alamat_error"></span>
           @else
           <textarea class="form-control" rows="3" name="alamat" id="edit_alamat"></textarea>
+          <span class="text-danger error-text alamat_error"></span>
           @endif
         </div>
       </div>
@@ -250,8 +272,10 @@ Setting
         <div class="col-sm-8 col-md-9 col-lg-10">
           @if(isset($guru->no_telp))
           <input id="edit_notelp" type="text" class="form-control" value="{{ $guru->no_telp }}" name="no_telp" />
+          <span class="text-danger error-text no_telp_error"></span>
           @else
           <input id="edit_notelp" type="text" class="form-control" value="" name="no_telp" />
+          <span class="text-danger error-text no_telp_error"></span>
           @endif
         </div>
       </div>
@@ -367,4 +391,5 @@ Setting
 @endif
 <script src="{{asset('backend/js/vendor/jquery-3.5.1.min.js')}}"></script>
 <script src="{{asset('js/Profil.js')}}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

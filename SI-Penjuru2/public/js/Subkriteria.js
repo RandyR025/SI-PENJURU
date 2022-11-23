@@ -89,12 +89,30 @@ $(document).on("submit", "#subkriteria_form", function (e) {
                   $("span." + prefix + "_error").text(val[0]);
               });
             } else {
-              window.location.reload();
               $("#saveform_errList").html("");
-              $("#success_message").addClass("alert alert-success");
-              $("#success_message").text(response.message);
+              // $("#success_message").addClass("alert alert-success");
+              // $("#success_message").text(response.message);
               $("#editModal").modal("hide");
               $("#editModal").find("input").val("");
+              const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  
+                },
+                buttonsStyling: false
+              })
+              swalWithBootstrapButtons.fire({
+                title: 'Berhasil',
+                text: "Data Telah Di Perbarui !!!",
+                icon: 'success',
+                confirmButtonText: 'Ok',
+                reverseButtons: true
+              })
+              $("#editModal").modal("hide");
+              $("#editModal").find("input").val("");
+              setTimeout(function(){
+                window.location.reload();
+             }, 2000);
               // fetchkriteria();
           }
       },
@@ -131,12 +149,30 @@ $(function(){
             $('span.'+prefix+'_error').text(val[0]);
           });
         } else {
-          window.location.reload();
           $('#saveform_errList').html("")
-          $('#success_message').addClass('alert alert-success')
-          $('#success_message').text(response.message)
+          // $('#success_message').addClass('alert alert-success')
+          // $('#success_message').text(response.message)
           $('#AddKriteriaModal').modal('hide');
           $('#AddKriteriaModal').find('input').val("");
+          const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-success',
+              
+            },
+            buttonsStyling: false
+          })
+          swalWithBootstrapButtons.fire({
+            title: 'Berhasil',
+            text: "Data Telah Di Tambahkan !!!",
+            icon: 'success',
+            confirmButtonText: 'Ok',
+            reverseButtons: true
+          })
+          $('#AddPengisianModal').modal('hide');
+          $('#AddPengisianModal').find('input').val("");
+          setTimeout(function(){
+            window.location.reload();
+         }, 2000);
 
         }
 
@@ -145,31 +181,94 @@ $(function(){
   });
 });
 /* Delete Data Pengguna */
+// $(document).on("click", ".delete_subkriteria", function (e) {
+//   e.preventDefault();
+//   var subkriteria_id = $(this).val();
+//   /* alert(user_id); */
+//   $("#delete_subkriteria_id").val(subkriteria_id);
+//   $("#deleteModal").modal("show");
+// });
+// $(document).on("click", ".delete_subkriteria_btn", function (e) {
+//   e.preventDefault();
+//   var subkriteria_id = $("#delete_subkriteria_id").val();
+
+//   $.ajaxSetup({
+//       headers: {
+//           "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+//       },
+//   });
+//   $.ajax({
+//       type: "DELETE",
+//       url: "/delete-subkriteria/" + subkriteria_id,
+//       success: function (response) {
+//           window.location.reload();
+//           console.log(response);
+//           $("#success_message").addClass("alert alert-success");
+//           $("#success_message").text(response.message);
+//           $("#deleteModal").modal("hide");
+//       },
+//   });
+// });
+
+
 $(document).on("click", ".delete_subkriteria", function (e) {
   e.preventDefault();
   var subkriteria_id = $(this).val();
-  /* alert(user_id); */
-  $("#delete_subkriteria_id").val(subkriteria_id);
-  $("#deleteModal").modal("show");
-});
-$(document).on("click", ".delete_subkriteria_btn", function (e) {
-  e.preventDefault();
-  var subkriteria_id = $("#delete_subkriteria_id").val();
 
-  $.ajaxSetup({
-      headers: {
-          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-      },
-  });
-  $.ajax({
-      type: "DELETE",
-      url: "/delete-subkriteria/" + subkriteria_id,
-      success: function (response) {
-          window.location.reload();
-          console.log(response);
-          $("#success_message").addClass("alert alert-success");
-          $("#success_message").text(response.message);
-          $("#deleteModal").modal("hide");
-      },
-  });
+
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger',
+    },
+    buttonsStyling: true
+  })
+  
+  swalWithBootstrapButtons.fire({
+    title: 'Yakin Hapus Data?',
+    text: "Anda Tidak Akan Dapat Mengembalikan Data Ini!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Ya, Hapus!',
+    cancelButtonText: 'Batal!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+    $.ajax({
+        type: "DELETE",
+        url: "/delete-subkriteria/" + subkriteria_id,
+        success: function (response) {
+            window.location.reload();
+            console.log(response);
+            $("#success_message").addClass("alert alert-success");
+            $("#success_message").text(response.message);
+            $("#deleteModal").modal("hide");
+        },
+    });
+      
+      swalWithBootstrapButtons.fire(
+        'Berhasil!',
+        'Data Telah Di Hapus',
+        'success'
+      )
+      setTimeout(function(){
+        window.location.reload();
+     }, 2000);
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Batal',
+        'Data Anda Aman :D',
+        'error'
+      )
+    }
+  })
 });
+  

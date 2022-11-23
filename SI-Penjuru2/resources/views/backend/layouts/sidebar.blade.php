@@ -218,6 +218,21 @@
     </li>
   </ul>
   @endif
+  @if (auth()->user()->level == "guru")
+  <li>
+      <a href="#apps" data-href="Apps.html" class="{{ Route::is('penilaiankinerjaguru') ? 'active' : '' }}">
+        <i data-cs-icon="screen" class="icon" data-cs-size="18"></i>
+        <span class="label">Kelola Data</span>
+      </a>
+      <ul id="apps">
+        <li>
+          <a href="{{route('penilaiankinerjaguru')}}" class="{{ Route::is('penilaiankinerjaguru') ? 'active' : '' }}">
+            <span class="label">Penilaian Kinerja Guru</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    @endif
 </div>
 <!-- Menu End -->
 

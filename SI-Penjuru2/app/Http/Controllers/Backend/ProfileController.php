@@ -84,103 +84,203 @@ class ProfileController extends Controller
         $user = $request->input('level');
         // dd($user);
         if ($user == "admin") {
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|max:32',
-            ]);
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => 400,
-                    'errors' => $validator->messages(),
+            $adminn = DB::table('admin')->join('users', 'admin.user_id', '=', 'users.id')->where('user_id',Auth::user()->id)->get();
+            if (count($adminn)<1) {
+                $validator = Validator::make($request->all(), [
+                    'nik' => 'required|unique:guru',
+                    'tempat_lahir' => 'required',
+                    'tanggal_lahir' => 'required',
+                    'jenis_kelamin' => 'required',
+                    'no_telp' => 'required',
+                    'alamat' => 'required',
                 ]);
-            } else {
-                $admin = DB::table('admin')->join('users', 'admin.user_id', '=', 'users.id')->where('user_id',Auth::user()->id);
-                if ($admin) {
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status' => 400,
+                        'errors' => $validator->messages(),
+                    ]);
+                }else {
+                    $admin = new Admin;
                     if ($request->hasFile('image')) {
-                        $gambar = DB::table('admin')->where('user_id',Auth::user()->id)->first();
-                        File::delete('images/'.$gambar->image);
                         $file = $request->file('image');
                         $extension = $file->getClientOriginalExtension();
-                        $filename= time().'.'.$extension;
-                        $file->move('images', $filename);
-                        $admin->update([
-                            'name' => $request->name,
-                            'nik' => $request->nik,
-                            'tanggal_lahir' => $request->tanggal_lahir,
-                            'tempat_lahir' => $request->tempat_lahir,
-                            'jenis_kelamin' => $request->jenis_kelamin,
-                            'alamat' => $request->alamat,
-                            'no_telp' => $request->no_telp,
-                            'image' => $filename,
-                            
-                    ]);
-                    } else {
-                        $admin->update([
-                            'name' => $request->name,
-                            'nik' => $request->nik,
-                            'tanggal_lahir' => $request->tanggal_lahir,
-                            'tempat_lahir' => $request->tempat_lahir,
-                            'jenis_kelamin' => $request->jenis_kelamin,
-                            'alamat' => $request->alamat,
-                            'no_telp' => $request->no_telp,
-                        ]);
+                        $filename = time().'.'.$extension;
+                        $file->move('images',$filename);
+
+                        $admin->user_id = $request->edit_id;
+                        $admin->nik = $request->nik;
+                        $admin->tempat_lahir = $request->tempat_lahir;
+                        $admin->tanggal_lahir = $request->tanggal_lahir;
+                        $admin->jenis_kelamin = $request->jenis_kelamin;
+                        $admin->no_telp = $request->no_telp;
+                        $admin->alamat = $request->alamat;
+                        $admin->image = $filename;
+                        $admin->save();
+                    }else {
+                        $admin->user_id = $request->edit_id;
+                        $admin->nik = $request->nik;
+                        $admin->tempat_lahir = $request->tempat_lahir;
+                        $admin->tanggal_lahir = $request->tanggal_lahir;
+                        $admin->jenis_kelamin = $request->jenis_kelamin;
+                        $admin->no_telp = $request->no_telp;
+                        $admin->alamat = $request->alamat;
+                        $admin->save();
                     }
+                    return response()->json([
+                        'status' => 200,
+                        'message' => "Data Berhasil Di Perbarui !!!",
+                    ]);
                 }
-                
-                return response()->json([
-                    'status' => 200,
-                    'message' => "Data Berhasil Di Perbarui !!!",
+            }else {
+                $validator = Validator::make($request->all(), [
+                    'name' => 'required|max:32',
                 ]);
-                        
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status' => 400,
+                        'errors' => $validator->messages(),
+                    ]);
+                } else {
+                    $admin = DB::table('admin')->join('users', 'admin.user_id', '=', 'users.id')->where('user_id',Auth::user()->id);
+                    if ($admin) {
+                        if ($request->hasFile('image')) {
+                            $gambar = DB::table('admin')->where('user_id',Auth::user()->id)->first();
+                            File::delete('images/'.$gambar->image);
+                            $file = $request->file('image');
+                            $extension = $file->getClientOriginalExtension();
+                            $filename= time().'.'.$extension;
+                            $file->move('images', $filename);
+                            $admin->update([
+                                'name' => $request->name,
+                                'nik' => $request->nik,
+                                'tanggal_lahir' => $request->tanggal_lahir,
+                                'tempat_lahir' => $request->tempat_lahir,
+                                'jenis_kelamin' => $request->jenis_kelamin,
+                                'alamat' => $request->alamat,
+                                'no_telp' => $request->no_telp,
+                                'image' => $filename,
+                                
+                        ]);
+                        } else {
+                            $admin->update([
+                                'name' => $request->name,
+                                'nik' => $request->nik,
+                                'tanggal_lahir' => $request->tanggal_lahir,
+                                'tempat_lahir' => $request->tempat_lahir,
+                                'jenis_kelamin' => $request->jenis_kelamin,
+                                'alamat' => $request->alamat,
+                                'no_telp' => $request->no_telp,
+                            ]);
+                        }
+                    }
+                    
+                    return response()->json([
+                        'status' => 200,
+                        'message' => "Data Berhasil Di Perbarui !!!",
+                    ]);
+                            
+                }
             }
+            
         }elseif ($user == "guru") {
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|max:32',
-            ]);
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => 400,
-                    'errors' => $validator->messages(),
+            $guruu = DB::table('guru')->join('users', 'guru.user_id', '=', 'users.id')->where('user_id',Auth::user()->id)->get();
+            if (count($guruu)<1) {
+                $validator = Validator::make($request->all(), [
+                    'nik' => 'required|unique:guru',
+                    'tempat_lahir' => 'required',
+                    'tanggal_lahir' => 'required',
+                    'jenis_kelamin' => 'required',
+                    'no_telp' => 'required',
+                    'alamat' => 'required',
                 ]);
-            } else {
-                $guru = DB::table('guru')->join('users', 'guru.user_id', '=', 'users.id')->where('user_id',Auth::user()->id);
-                if ($guru) {
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status' => 400,
+                        'errors' => $validator->messages(),
+                    ]);
+                }else {
+                    $guru = new Guru;
                     if ($request->hasFile('image')) {
-                        $gambar = DB::table('guru')->where('user_id',Auth::user()->id)->first();
-                        File::delete('images/'.$gambar->image);
                         $file = $request->file('image');
                         $extension = $file->getClientOriginalExtension();
-                        $filename= time().'.'.$extension;
-                        $file->move('images', $filename);
-                        $guru->update([
-                            'name' => $request->name,
-                            'nik' => $request->nik,
-                            'tanggal_lahir' => $request->tanggal_lahir,
-                            'tempat_lahir' => $request->tempat_lahir,
-                            'jenis_kelamin' => $request->jenis_kelamin,
-                            'alamat' => $request->alamat,
-                            'no_telp' => $request->no_telp,
-                            'image' => $filename,
-                            
-                    ]);
-                    } else {
-                        $guru->update([
-                            'name' => $request->name,
-                            'nik' => $request->nik,
-                            'tanggal_lahir' => $request->tanggal_lahir,
-                            'tempat_lahir' => $request->tempat_lahir,
-                            'jenis_kelamin' => $request->jenis_kelamin,
-                            'alamat' => $request->alamat,
-                            'no_telp' => $request->no_telp,
-                        ]);
+                        $filename = time().'.'.$extension;
+                        $file->move('images',$filename);
+
+                        $guru->user_id = $request->edit_id;
+                        $guru->nik = $request->nik;
+                        $guru->tempat_lahir = $request->tempat_lahir;
+                        $guru->tanggal_lahir = $request->tanggal_lahir;
+                        $guru->jenis_kelamin = $request->jenis_kelamin;
+                        $guru->no_telp = $request->no_telp;
+                        $guru->alamat = $request->alamat;
+                        $guru->image = $filename;
+                        $guru->save();
+                    }else {
+                        $guru->user_id = $request->edit_id;
+                        $guru->nik = $request->nik;
+                        $guru->tempat_lahir = $request->tempat_lahir;
+                        $guru->tanggal_lahir = $request->tanggal_lahir;
+                        $guru->jenis_kelamin = $request->jenis_kelamin;
+                        $guru->no_telp = $request->no_telp;
+                        $guru->alamat = $request->alamat;
+                        $guru->save();
                     }
+                    return response()->json([
+                        'status' => 200,
+                        'message' => "Data Berhasil Di Perbarui !!!",
+                    ]);
                 }
-                
-                return response()->json([
-                    'status' => 200,
-                    'message' => "Data Berhasil Di Perbarui !!!",
+            }else {
+                $validator = Validator::make($request->all(), [
+                    'name' => 'required|max:32',
                 ]);
-                        
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status' => 400,
+                        'errors' => $validator->messages(),
+                    ]);
+                } else {
+                    $guru = DB::table('guru')->join('users', 'guru.user_id', '=', 'users.id')->where('user_id',Auth::user()->id);
+                    if ($guru) {
+                        if ($request->hasFile('image')) {
+                            $gambar = DB::table('guru')->where('user_id',Auth::user()->id)->first();
+                            File::delete('images/'.$gambar->image);
+                            $file = $request->file('image');
+                            $extension = $file->getClientOriginalExtension();
+                            $filename= time().'.'.$extension;
+                            $file->move('images', $filename);
+                            $guru->update([
+                                'name' => $request->name,
+                                'nik' => $request->nik,
+                                'tanggal_lahir' => $request->tanggal_lahir,
+                                'tempat_lahir' => $request->tempat_lahir,
+                                'jenis_kelamin' => $request->jenis_kelamin,
+                                'alamat' => $request->alamat,
+                                'no_telp' => $request->no_telp,
+                                'image' => $filename,
+                                
+                        ]);
+                        } else {
+                            $guru->update([
+                                'name' => $request->name,
+                                'nik' => $request->nik,
+                                'tanggal_lahir' => $request->tanggal_lahir,
+                                'tempat_lahir' => $request->tempat_lahir,
+                                'jenis_kelamin' => $request->jenis_kelamin,
+                                'alamat' => $request->alamat,
+                                'no_telp' => $request->no_telp,
+                            ]);
+                        }
+                    }
+                    
+                    return response()->json([
+                        'status' => 200,
+                        'message' => "Data Berhasil Di Perbarui !!!",
+                    ]);
+                            
+                }
             }
+            
         }elseif($user == "wali"){
             $validator = Validator::make($request->all(), [
                 'name' => 'required|max:32',

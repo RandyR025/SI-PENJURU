@@ -77,35 +77,93 @@ function fetchuser() {
 }
 
 /* Delete Data Pengguna */
+// $(document).on('click', '.delete_user', function(e){
+//   e.preventDefault();
+//   var user_id = $(this).val();
+//   /* alert(user_id); */
+//   $('#delete_user_id').val(user_id);
+//   $('#deleteModal').modal('show');
+// });
+// $(document).on('click', '.delete_user_btn', function(e){
+//   e.preventDefault();
+//   var user_id = $('#delete_user_id').val();
+
+//   $.ajaxSetup({
+//     headers: {
+//       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//     }
+// });
+//   $.ajax({
+//     type: "DELETE",
+//     url: "/delete-user/"+user_id,
+//     success: function (response){
+//       console.log(response);
+//       $('#success_message').addClass('alert alert-success');
+//       $('#success_message').text(response.message);
+//       $('#deleteModal').modal('hide');
+//       fetchuser();
+//     }
+
+//   })
+// });
+
+
 $(document).on('click', '.delete_user', function(e){
   e.preventDefault();
   var user_id = $(this).val();
-  /* alert(user_id); */
-  $('#delete_user_id').val(user_id);
-  $('#deleteModal').modal('show');
-});
-$(document).on('click', '.delete_user_btn', function(e){
-  e.preventDefault();
-  var user_id = $('#delete_user_id').val();
-
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger',
+    },
+    buttonsStyling: true
+  })
+  
+  swalWithBootstrapButtons.fire({
+    title: 'Yakin Hapus Data?',
+    text: "Anda Tidak Akan Dapat Mengembalikan Data Ini!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Ya, Hapus!',
+    cancelButtonText: 'Batal!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+      $.ajax({
+        type: "DELETE",
+        url: "/delete-user/"+user_id,
+        success: function (response){
+          console.log(response);
+          // $('#success_message').addClass('alert alert-success');
+          // $('#success_message').text(response.message);
+          // $('#deleteModal').modal('hide');
+          fetchuser();
+        }
+      });
+      
+      swalWithBootstrapButtons.fire(
+        'Berhasil!',
+        'Data Telah Di Hapus',
+        'success'
+      )
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Batal',
+        'Data Anda Aman :D',
+        'error'
+      )
     }
-});
-  $.ajax({
-    type: "DELETE",
-    url: "/delete-user/"+user_id,
-    success: function (response){
-      console.log(response);
-      $('#success_message').addClass('alert alert-success');
-      $('#success_message').text(response.message);
-      $('#deleteModal').modal('hide');
-      fetchuser();
-    }
-
   })
 });
+
 
 /* Edit Data Pengguna */
 $(document).on('click', '.edit_user', function(e){
@@ -174,8 +232,22 @@ $(document).on('click', '.update_user', function(e){
       }else{
         $('#updateform_errList').html("")
         $('#success_message').html("")
-            $('#success_message').addClass('alert alert-success')
-            $('#success_message').text(response.message)
+            // $('#success_message').addClass('alert alert-success')
+            // $('#success_message').text(response.message)
+            const swalWithBootstrapButtons = Swal.mixin({
+              customClass: {
+                confirmButton: 'btn btn-success',
+                
+              },
+              buttonsStyling: false
+            })
+            swalWithBootstrapButtons.fire({
+              title: 'Berhasil',
+              text: "Data Telah Di Perbarui !!!",
+              icon: 'success',
+              confirmButtonText: 'Ok',
+              reverseButtons: true
+            })
             $('#editModal').modal('hide');
             fetchuser();
       }
@@ -214,8 +286,22 @@ $(document).on('click', '.update_user', function(e){
             });
           } else {
             $('#saveform_errList').html("")
-            $('#success_message').addClass('alert alert-success')
-            $('#success_message').text(response.message)
+            // $('#success_message').addClass('alert alert-success')
+            // $('#success_message').text(response.message)
+            const swalWithBootstrapButtons = Swal.mixin({
+              customClass: {
+                confirmButton: 'btn btn-success',
+                
+              },
+              buttonsStyling: false
+            })
+            swalWithBootstrapButtons.fire({
+              title: 'Berhasil',
+              text: "Data Telah Di Tambahkan !!!",
+              icon: 'success',
+              confirmButtonText: 'Ok',
+              reverseButtons: true
+            })
             $('#AddPenggunaModal').modal('hide');
             $('#AddPenggunaModal').find('input').val("");
             fetchuser();
