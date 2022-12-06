@@ -14,4 +14,9 @@ class Penilaian extends Model
         'id_penilaian',
         'nama_penilaian',
     ];
+
+
+    public function pengisian(){
+        return $this->hasMany(Pengisian::class);
+    }
 }

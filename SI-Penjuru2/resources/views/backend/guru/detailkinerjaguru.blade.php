@@ -23,16 +23,16 @@ Penilaian
         @php
             $choicenum = 1;
         @endphp
-        @foreach ($pengisian as $item)
+        @foreach ($coba1 as $key => $item)
             <div class="d-flex flex-row align-content-center align-items-center mb-5">
                 <div class="sw-5 me-4">
                     <div class="border border-1 border-primary rounded-xl sw-5 sh-5 text-primary d-flex justify-content-center align-items-center">{{$questionNum++}}</div>
                 </div>
                 <div class="heading mb-0">
-                    {{$item[0]->nama_pengisian}}
+                    {{$item['nama_pengisian']}}
                 </div>
             </div>
-            @foreach ($item as $choice)
+            @foreach ($coba[$key] as $key => $p)
             <div class="d-flex flex-row align-content-center align-items-center position-relative mb-3">
                 <div class="sw-5 me-4 d-flex justify-content-center flex-grow-0 flex-shrink-0">
                     <div class="d-flex justify-content-center align-items-center">
@@ -42,7 +42,7 @@ Penilaian
                     </div>
                 </div>
                 <div class="mb-0 text-alternate">
-                    {{ $choice->nama_pilihan }}
+                        {{$p->nama_pilihan}}
                 </div>
             </div>
             @endforeach

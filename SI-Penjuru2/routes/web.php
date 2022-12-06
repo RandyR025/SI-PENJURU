@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\LoginController;
 use App\Http\Controllers\Backend\PengisianController;
 use App\Http\Controllers\Backend\PenilaianController;
 use App\Http\Controllers\Backend\PenilaianKinerjaGuruController;
+use App\Http\Controllers\Backend\PerbandingankriteriaController;
 use App\Http\Controllers\Backend\PilihanController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SubkriteriaController;
@@ -99,6 +100,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/datapilihan', [PilihanController::class, 'store'])->name('pilihan.store');
         Route::delete('/delete-pilihan/{id}',[PilihanController::class, 'destroy']);
         /* End Data Pilihan */
+
+        /* Start Perbandingan Kriteria */
+        Route::get('/perbandingankriteria', [PerbandingankriteriaController::class, 'index'])->name('perbandingankriteria');
+        Route::post('/perbandingansimpan', [PerbandingankriteriaController::class, 'store'])->name('perbandingansimpan');
+        /* End Perbandingan Kriteria */
     });
     Route::group(['middleware' => ['cek_login:guru']], function () {
         Route::get('/dashboardguru', [DashboardController::class, 'index'])->name('dashboardguru');

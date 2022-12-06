@@ -16,4 +16,12 @@ class Pengisian extends Model
         'nama_pengisian',
         'kode_subkriteria',
     ];
+
+    public function penilaian(){
+        return $this->belongsTo(Penilaian::class);
+    }
+
+    public function pilihan(){
+        return $this->hasMany(Pilihan::class);
+    }
 }

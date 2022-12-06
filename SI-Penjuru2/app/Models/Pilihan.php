@@ -16,4 +16,8 @@ class Pilihan extends Model
         'nama_pilihan',
         'points',
     ];
+
+    public function pengisian(){
+        return $this->belongsTo(Pengisian::class);
+    }
 }

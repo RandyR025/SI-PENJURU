@@ -74,145 +74,20 @@
       </ul>
     </li>
     <li>
-      <a href="#pages" data-href="Pages.html">
+      <a href="#pages" class="{{ Route::is('perbandingankriteria') ? 'active' : '' }}">
         <i data-cs-icon="notebook-1" class="icon" data-cs-size="18"></i>
-        <span class="label">Pages</span>
+        <span class="label">Perhitungan</span>
       </a>
       <ul id="pages">
         <li>
+          <a href="{{route('perbandingankriteria')}}" class="{{ Route::is('perbandingankriteria') ? 'active' : '' }}">
+            <span class="label">Perbandingan Kriteria</span>
+          </a>
+        </li>
+        <li>
           <a href="#authentication" data-href="Pages.Authentication.html">
-            <span class="label">Authentication</span>
+            <span class="label">Perbandingan Sub Kriteria</span>
           </a>
-          <ul id="authentication">
-            <li>
-              <a href="Pages.Authentication.Login.html">
-                <span class="label">Login</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Authentication.Register.html">
-                <span class="label">Register</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Authentication.ForgotPassword.html">
-                <span class="label">Forgot Password</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Authentication.ResetPassword.html">
-                <span class="label">Reset Password</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#blog" data-href="Pages.Blog.html">
-            <span class="label">Blog</span>
-          </a>
-          <ul id="blog">
-            <li>
-              <a href="Pages.Blog.Home.html">
-                <span class="label">Home</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Blog.Grid.html">
-                <span class="label">Grid</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Blog.List.html">
-                <span class="label">List</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Blog.Detail.html">
-                <span class="label">Detail</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#miscellaneous" data-href="Pages.Miscellaneous.html">
-            <span class="label">Miscellaneous</span>
-          </a>
-          <ul id="miscellaneous">
-            <li>
-              <a href="Pages.Miscellaneous.Faq.html">
-                <span class="label">Faq</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Miscellaneous.KnowledgeBase.html">
-                <span class="label">Knowledge Base</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Miscellaneous.Error.html">
-                <span class="label">Error</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Miscellaneous.ComingSoon.html">
-                <span class="label">Coming Soon</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Miscellaneous.Pricing.html">
-                <span class="label">Pricing</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Miscellaneous.Search.html">
-                <span class="label">Search</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Miscellaneous.Mailing.html">
-                <span class="label">Mailing</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Miscellaneous.Empty.html">
-                <span class="label">Empty</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#portfolio" data-href="Pages.Portfolio.html">
-            <span class="label">Portfolio</span>
-          </a>
-          <ul id="portfolio">
-            <li>
-              <a href="Pages.Portfolio.Home.html">
-                <span class="label">Home</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Portfolio.Detail.html">
-                <span class="label">Detail</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#profile" data-href="Pages.Profile.html">
-            <span class="label">Profile</span>
-          </a>
-          <ul id="profile">
-            <li>
-              <a href="Pages.Profile.Standard.html">
-                <span class="label">Standard</span>
-              </a>
-            </li>
-            <li>
-              <a href="Pages.Profile.Settings.html">
-                <span class="label">Settings</span>
-              </a>
-            </li>
-          </ul>
         </li>
       </ul>
     </li>
