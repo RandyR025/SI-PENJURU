@@ -48,6 +48,9 @@ class PerbandingankriteriaController extends Controller
         $kriteria2 = $request->input('tkriteria2');
         foreach ($request->pkriteria as $key => $value) {
             $nilaiperbandingan = new Perbandingankriteria;
+            if (isset($nilaiperbandingan->kriteria_pertama)) { 
+                $nilaiperbandingan->kriteria_pertama = $kriteria1[$key];
+            }
             $nilaiperbandingan->kriteria_pertama = $kriteria1[$key];
             $nilaiperbandingan->value = $value;
             $nilaiperbandingan->kriteria_kedua = $kriteria2[$key];

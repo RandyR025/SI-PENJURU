@@ -51,7 +51,24 @@ Perhitungan
     <?php
     for ($i = 0; $i < $perbandingan; $i++) {
       ?>
-      <tr hidden>
+      <!-- @if(isset($kriteria[$i-1]->nama_kriteria))
+      <tr>
+            <th>
+              <input type="text" name="tkriteria[]" id="tkriteria" value="{{$kriteria[$i]->kode_kriteria}}" hidden>
+              {{$kriteria[$i]->nama_kriteria}}
+            </th>
+            <th><select name="pkriteria[]" id="" class="pkriteria text-center form-control">
+                <option value="1">1</option>
+              </select>
+            </th>
+            <th>
+              <input type="text" name="tkriteria2[]" id="tkriteria2" value="{{$kriteria[$i-1]->kode_kriteria}}" hidden>
+              {{$kriteria[$i-1]->nama_kriteria}}
+            </th>
+          </tr>
+          
+          <tr>
+            @endif -->
             <th>
               <input type="text" name="tkriteria[]" id="tkriteria" value="{{$kriteria[$i]->kode_kriteria}}" hidden>
               {{$kriteria[$i]->nama_kriteria}}
@@ -86,6 +103,31 @@ Perhitungan
             <th>
               <input type="text" name="tkriteria2[]" id="tkriteria2" value="{{$kriteria[$j+1]->kode_kriteria}}" hidden>
               {{$kriteria[$j+1]->nama_kriteria}}
+            </th>
+          </tr>
+          @endif
+          <?php
+        }
+          for ($k=0; $k < $i+1; $k++) { 
+            ?>
+        @if(isset($kriteria[$i+1]->nama_kriteria))
+
+          <tr>
+            <th>
+              <input type="text" name="tkriteria[]" id="tkriteria" value="{{$kriteria[$i+1]->kode_kriteria}}" hidden>
+              {{$kriteria[$i+1]->nama_kriteria}}
+            </th>
+            <th><select name="pkriteria[]" id="" class="pkriteria text-center form-control">
+                <option value="1">1</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="7">7</option>
+                <option value="9">9</option>
+              </select>
+            </th>
+            <th>
+              <input type="text" name="tkriteria2[]" id="tkriteria2" value="{{$kriteria[$k]->kode_kriteria}}" hidden>
+              {{$kriteria[$k]->nama_kriteria}}
             </th>
           </tr>
           @endif
