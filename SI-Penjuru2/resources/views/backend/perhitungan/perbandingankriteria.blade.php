@@ -45,102 +45,8 @@ Perhitungan
     {{$value->nama_kriteria}} <input type="text" name="" id=""> {{$kriteria[$key+1]->nama_kriteria}}</br>
     @endif
     @endforeach -->
-    <form action="{{ route('perbandingansimpan') }}" method="post" id="form-perbandingan">
-    @csrf
-    <table class="table table-bordered">
-    <?php
-    for ($i = 0; $i < $perbandingan; $i++) {
-      ?>
-      <!-- @if(isset($kriteria[$i-1]->nama_kriteria))
-      <tr>
-            <th>
-              <input type="text" name="tkriteria[]" id="tkriteria" value="{{$kriteria[$i]->kode_kriteria}}" hidden>
-              {{$kriteria[$i]->nama_kriteria}}
-            </th>
-            <th><select name="pkriteria[]" id="" class="pkriteria text-center form-control">
-                <option value="1">1</option>
-              </select>
-            </th>
-            <th>
-              <input type="text" name="tkriteria2[]" id="tkriteria2" value="{{$kriteria[$i-1]->kode_kriteria}}" hidden>
-              {{$kriteria[$i-1]->nama_kriteria}}
-            </th>
-          </tr>
-          
-          <tr>
-            @endif -->
-            <th>
-              <input type="text" name="tkriteria[]" id="tkriteria" value="{{$kriteria[$i]->kode_kriteria}}" hidden>
-              {{$kriteria[$i]->nama_kriteria}}
-            </th>
-            <th><select name="pkriteria[]" id="" class="pkriteria text-center form-control">
-                <option value="1">1</option>
-              </select>
-            </th>
-            <th>
-              <input type="text" name="tkriteria2[]" id="tkriteria2" value="{{$kriteria[$i]->kode_kriteria}}" hidden>
-              {{$kriteria[$i]->nama_kriteria}}
-            </th>
-          </tr>
-      <?php
-      for ($j = $i; $j < $perbandingan; $j++) {
-        ?>
-        @if(isset($kriteria[$j+1]->nama_kriteria))
+    {{showTabelPerbandingan('kriteria','kriteria')}}
 
-          <tr>
-            <th>
-              <input type="text" name="tkriteria[]" id="tkriteria" value="{{$kriteria[$i]->kode_kriteria}}" hidden>
-              {{$kriteria[$i]->nama_kriteria}}
-            </th>
-            <th><select name="pkriteria[]" id="" class="pkriteria text-center form-control">
-                <option value="1">1</option>
-                <option value="3">3</option>
-                <option value="5">5</option>
-                <option value="7">7</option>
-                <option value="9">9</option>
-              </select>
-            </th>
-            <th>
-              <input type="text" name="tkriteria2[]" id="tkriteria2" value="{{$kriteria[$j+1]->kode_kriteria}}" hidden>
-              {{$kriteria[$j+1]->nama_kriteria}}
-            </th>
-          </tr>
-          @endif
-          <?php
-        }
-          for ($k=0; $k < $i+1; $k++) { 
-            ?>
-        @if(isset($kriteria[$i+1]->nama_kriteria))
-
-          <tr>
-            <th>
-              <input type="text" name="tkriteria[]" id="tkriteria" value="{{$kriteria[$i+1]->kode_kriteria}}" hidden>
-              {{$kriteria[$i+1]->nama_kriteria}}
-            </th>
-            <th><select name="pkriteria[]" id="" class="pkriteria text-center form-control">
-                <option value="1">1</option>
-                <option value="3">3</option>
-                <option value="5">5</option>
-                <option value="7">7</option>
-                <option value="9">9</option>
-              </select>
-            </th>
-            <th>
-              <input type="text" name="tkriteria2[]" id="tkriteria2" value="{{$kriteria[$k]->kode_kriteria}}" hidden>
-              {{$kriteria[$k]->nama_kriteria}}
-            </th>
-          </tr>
-          @endif
-          <?php
-      }
-    }
-    
-    ?>
-    </table>
-    <div class="col-12 text-center">
-    <button type="submit" class="btn btn-outline-primary btn-icon btn-icon-end sw-25">Comparrisson</button>
-    </div>
-    </form>
   </div>
 </div>
 
@@ -149,5 +55,15 @@ Perhitungan
 <!-- <script src="cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script> -->
 <!-- <script src="{{asset('js/Guru.js')}}"></script> -->
 <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+
+<script type="text/javascript">
+  function sum(no) {
+     var txtkriteriavalue = document.getElementById('hkriteria'+no).value;
+     var result = 1/parseFloat(txtkriteriavalue);
+     if (!isNaN(result)) {
+      document.getElementById('hkriteriaterbalik'+no).value = result.toFixed(2);
+     }
+  }
+</script>
 
 @endsection

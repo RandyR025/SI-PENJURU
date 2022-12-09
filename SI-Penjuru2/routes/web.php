@@ -104,6 +104,7 @@ Route::group(['middleware' => ['auth']], function () {
         /* Start Perbandingan Kriteria */
         Route::get('/perbandingankriteria', [PerbandingankriteriaController::class, 'index'])->name('perbandingankriteria');
         Route::post('/perbandingansimpan', [PerbandingankriteriaController::class, 'store'])->name('perbandingansimpan');
+        Route::post('/perbandinganproses', [PerbandingankriteriaController::class, 'proses'])->name('perbandinganproses');
         /* End Perbandingan Kriteria */
     });
     Route::group(['middleware' => ['cek_login:guru']], function () {
