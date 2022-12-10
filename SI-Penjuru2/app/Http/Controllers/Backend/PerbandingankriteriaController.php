@@ -180,8 +180,34 @@ class PerbandingankriteriaController extends Controller
                 $jmlmpb[$y] += $value;
             }
         }
+
+        for ($x=0; $x <= ($n-1) ; $x++) {
+            for ($y=0; $y <= ($n-1) ; $y++) {
+                $matrikb[$x][$y] = $matrik[$x][$y] / $jmlmpb[$y];
+                $value	= $matrikb[$x][$y];
+                $jmlmnk[$x] += $value;
+            }
+    
+            // nilai priority vektor
+            $pv[$x]	 = $jmlmnk[$x] / $n;
+    
+            // memasukkan nilai priority vektor ke dalam tabel pv_kriteria dan pv_alternatif
+            if ($jenis == 'kriteria') {
+                $id_kriteria = getKriteriaID($x);
+                inputKriteriaPV($id_kriteria,$pv[$x]);
+            } else {
+                // $id_kriteria	= getKriteriaID($jenis-1);
+                // $id_alternatif	= getAlternatifID($x);
+                // inputAlternatifPV($id_alternatif,$id_kriteria,$pv[$x]);
+            }
+        }
+
+        $eigenvektor = getEigenVector($jmlmpb,$jmlmnk,$n);
+	    $consIndex   = getConsIndex($jmlmpb,$jmlmnk,$n);
+	    $consRatio   = getConsRatio($jmlmpb,$jmlmnk,$n);
+
         bantuan($matrik);
         
-        return view('backend/perhitungan.outputperbandingan', compact('matrik','jmlmpb'));
+        return view('backend/perhitungan.outputperbandingan', compact('matrik','jmlmpb','matrikb','jmlmnk','pv','eigenvektor','consIndex','consRatio'));
     }
 }

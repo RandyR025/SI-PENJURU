@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Perbandingankriteria;
+use App\Models\Pvkriteria;
 use Illuminate\Support\Facades\DB;
 
 function getKriteriaID($no_urut)
@@ -26,6 +27,65 @@ function getKriteriaNama($no_urut)
         $nama[] = $row->nama_kriteria;
     }
     return $nama[($no_urut)];
+}
+
+function getKriteriaPv($id_kriteria)
+{
+    $query = DB::table('pv_kriteria')->select('nilai')->where('id_kriteria','=',$id_kriteria)->get();
+    foreach ($query as $row) {
+        $pv = $row->nilai;
+    }
+    return $pv;
+}
+
+function inputKriteriaPv($id_kriteria,$pv)
+{
+    $query = Pvkriteria::where([
+        ['id_kriteria','=',$id_kriteria],
+    ])->count();
+    
+    if ($query == 0) {
+        $queryy = new Pvkriteria;
+        $queryy->id_kriteria = $id_kriteria;
+        $queryy->nilai = $pv;
+        $queryy->save();
+    }else {
+        Pvkriteria::where([
+            ['id_kriteria','=',$id_kriteria],
+        ])->update(['nilai'=> $pv]);
+    }
+}
+
+function getNilaiIR($jmlKriteria)
+{
+    $query = DB::table('ir')->select('nilai')->where('jumlah','=',$jmlKriteria)->get();
+    foreach ($query as $row) {
+        $nilaiIR = $row->nilai;
+    }
+    return $nilaiIR;
+}
+
+function getEigenVector($matrik_a,$matrik_b,$n) {
+	$eigenvektor = 0;
+	for ($i=0; $i <= ($n-1) ; $i++) {
+		$eigenvektor += ($matrik_a[$i] * (($matrik_b[$i]) / $n));
+	}
+
+	return $eigenvektor;
+}
+
+function getConsIndex($matrik_a,$matrik_b,$n) {
+	$eigenvektor = getEigenVector($matrik_a,$matrik_b,$n);
+	$consindex = ($eigenvektor - $n)/($n-1);
+
+	return $consindex;
+}
+
+function getConsRatio($matrik_a,$matrik_b,$n) {
+	$consindex = getConsIndex($matrik_a,$matrik_b,$n);
+	$consratio = $consindex / getNilaiIR($n);
+
+	return $consratio;
 }
 
 function getJumlahKriteria(){
@@ -102,8 +162,8 @@ function showTabelPerbandingan($jenis, $kriteria)
 	<table class="ui celled selectable collapsing table">
 		<thead>
 			<tr>
-				<th colspan="2">pilih yang lebih penting</th>
-				<th>nilai perbandingan</th>
+				<th colspan="2">Pilih Yang Lebih Penting</th>
+				<th>Nilai Perbandingan</th>
 			</tr>
 		</thead>
 		<tbody>
