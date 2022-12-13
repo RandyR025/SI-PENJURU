@@ -74,7 +74,7 @@
       </ul>
     </li>
     <li>
-      <a href="#pages" class="{{ Route::is('perbandingankriteria') ? 'active' : '' }}">
+      <a href="#pages" class="{{ Route::is('perbandingankriteria') || Route::is('perbandingansubkriteria') ? 'active' : '' }}">
         <i data-cs-icon="notebook-1" class="icon" data-cs-size="18"></i>
         <span class="label">Perhitungan</span>
       </a>
@@ -85,7 +85,7 @@
           </a>
         </li>
         <li>
-          <a href="#authentication" data-href="Pages.Authentication.html">
+          <a href="{{route('perbandingansubkriteria')}}" class="{{ Route::is('perbandingansubkriteria') ? 'active' : '' }}" data-href="Pages.Authentication.html">
             <span class="label">Perbandingan Sub Kriteria</span>
           </a>
         </li>

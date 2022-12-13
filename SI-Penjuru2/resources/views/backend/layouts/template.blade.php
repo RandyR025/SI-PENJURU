@@ -22,7 +22,7 @@
     <!-- Content Start -->
     <div>
       <div class="card mb-5">
-        <div class="card-body">
+        <div class="card-body overflow-auto">
           @yield('content')
 
           @include('backend/layouts.footer')

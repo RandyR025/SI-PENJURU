@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\PengisianController;
 use App\Http\Controllers\Backend\PenilaianController;
 use App\Http\Controllers\Backend\PenilaianKinerjaGuruController;
 use App\Http\Controllers\Backend\PerbandingankriteriaController;
+use App\Http\Controllers\Backend\PerbandingansubkriteriaController;
 use App\Http\Controllers\Backend\PilihanController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SubkriteriaController;
@@ -106,6 +107,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/perbandingansimpan', [PerbandingankriteriaController::class, 'store'])->name('perbandingansimpan');
         Route::post('/perbandinganproses', [PerbandingankriteriaController::class, 'proses'])->name('perbandinganproses');
         /* End Perbandingan Kriteria */
+
+        /* Start Perbandingan SubKriteria */
+        Route::get('/perbandingansubkriteria', [PerbandingansubkriteriaController::class, 'index'])->name('perbandingansubkriteria');
+        Route::get('/show-perbandingansubkriteria/{id}',[PerbandingansubkriteriaController::class, 'show'])->name('showperbandingansubkriteria');
+        Route::post('/subperbandinganproses', [PerbandingansubkriteriaController::class, 'proses'])->name('subperbandinganproses');
+        /* End Perbandingan SubKriteria */
     });
     Route::group(['middleware' => ['cek_login:guru']], function () {
         Route::get('/dashboardguru', [DashboardController::class, 'index'])->name('dashboardguru');
