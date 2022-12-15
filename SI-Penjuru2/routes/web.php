@@ -89,7 +89,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit-pengisian/{id}',[PengisianController::class, 'edit'])->name('editpengisian');
         Route::post('/update-pengisian/{id}',[PengisianController::class, 'update'])->name('update.pengisian');
         Route::post('/datapengisian', [PengisianController::class, 'store'])->name('pengisian.store');
-        Route::delete('/delete-pengisian/{id}',[PengisianController::class, 'destroy']);        
+        Route::delete('/delete-pengisian/{id}',[PengisianController::class, 'destroy']);
+        Route::get('/getsubkriteria/{id}', [PengisianController::class, 'getSubkriteria'])->name('getSubkriteria');
+                
         /* End Data Pengisian */
 
         /* Start Data Pilihan */
@@ -120,6 +122,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/profileguru/{id}',[ProfileController::class, 'update'])->name('updateprofileguru');
         Route::get('/penilaiankinerjaguru',[PenilaianKinerjaGuruController::class, 'index'])->name('penilaiankinerjaguru');
         Route::get('/detailkinerjaguru/{id}',[PenilaianKinerjaGuruController::class, 'show'])->name('detailkinerjaguru');
+        Route::post('/gethasilpenilaian', [PenilaianKinerjaGuruController::class, 'hasilpilihan'])->name('gethasilpenilaian');
     });
 });
 Route::get('/masukLogin', [LoginController::class, 'index'])->name('masuklogin');

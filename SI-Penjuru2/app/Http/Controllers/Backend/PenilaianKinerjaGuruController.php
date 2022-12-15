@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Hasilpilihan;
 use App\Models\Pengisian;
 use App\Models\Penilaian;
 use App\Models\Pilihan;
@@ -68,12 +69,14 @@ class PenilaianKinerjaGuruController extends Controller
         $wali = DB::table('wali')->join('users', 'wali.user_id', '=', 'users.id')->find(Auth::user()->id);
 
         // $pengisian = collect(DB::table('pilihan')->join('pengisian', 'pilihan.kode_pengisian', '=', 'pengisian.kode_pengisian')->join('penilaian', 'pengisian.id_penilaian', '=', 'penilaian.id_penilaian')->where('penilaian.id_penilaian',$id)->join('subkriteria', 'pengisian.kode_subkriteria', '=', 'subkriteria.kode_subkriteria')->join('kriteria', 'subkriteria.kode_kriteria', '=', 'kriteria.kode_kriteria')->get()->groupBy('kode_pengisian'));
-        $coba1 = Pengisian::with('penilaian')->where('id_penilaian','=',$id)->get();
+        $coba1 = Pengisian::with('penilaian')->where('id_penilaian','=',$id)->paginate(1);
         foreach ($coba1 as $key => $value) {
             $coba[$key] = Pilihan::with('pengisian')->where('kode_pengisian','=',$value->kode_pengisian)->get();
         }
         // dd($coba);
-        return view('backend/guru.detailkinerjaguru', compact('admin','guru', 'wali','coba','coba1'));
+        $hasilpilihan = DB::table('hasilpilihan')->where('user_id','=',Auth::user()->id)->get();
+        // dd($hasilpilihan);
+        return view('backend/guru.detailkinerjaguru', compact('admin','guru', 'wali','coba','coba1','hasilpilihan'));
     }
 
     /**
@@ -108,5 +111,28 @@ class PenilaianKinerjaGuruController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function hasilpilihan(Request $request){
+        $query = Hasilpilihan::where([
+            ['user_id','=',Auth::user()->id],
+            ['kode_pengisian','=',$request->pengisian_id],
+        ])->count();
+
+        if ($query == 0) {
+            $hasilpilihan = new Hasilpilihan;
+            // return $request;
+            // $pilihan = "answer".$request->input('question');
+            $hasilpilihan->kode_pilihan = $request->option_id;
+            $hasilpilihan->kode_pengisian = $request->pengisian_id;
+            $hasilpilihan->user_id = Auth::user()->id;
+            $hasilpilihan->save();   
+        }else {
+            Hasilpilihan::where([
+            ['user_id','=',Auth::user()->id],
+            ['kode_pengisian','=',$request->pengisian_id],
+        ])->update(['kode_pilihan'=> $request->option_id]);
+        }
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Hasilpilihan;
 use App\Models\Perbandingankriteria;
 use App\Models\Perbandingansubkriteria;
 use App\Models\Pvkriteria;
@@ -436,4 +437,17 @@ function bantuan($matrik)
     // }
 
     // return $tampil;
+}
+
+
+function hasilPilihan($pilihan,$user){
+    $query = Hasilpilihan::where([
+        ['user_id','=',$user],
+        ['kode_pilihan','=',$pilihan],
+    ])->count();
+    if ($query == 1) {
+        return true;
+    }else {
+        return false;
+    }
 }

@@ -269,3 +269,64 @@
     })
     
   });
+
+
+  // $('#kode_kriteria').change(function () {
+  //   var kriID = $(this).val();
+  //   if (kriID) {
+  //     $.ajax({
+  //       type:"GET",
+  //       url:"/getSubkriteria/"+kriID,
+  //       data:{"_token":"{{ csrf_token() }}"},
+  //       dataType: 'json',
+  //       success:function (data) {
+  //         if (data) {
+  //           $("#kode_subkriteria").empty();
+  //           $("#kode_subkriteria").append('<option>--------Pilih Subkriteria-------</option>');
+  //           $.each(data,function (key, subkriteria) {
+  //             $('select[name="kode_subkriteria"]').append('<option value="'+key+'">'+subkriteria.nama_subkriteria+'</option>');
+  //           });
+  //         }else{
+  //           $("#kode_subkriteria").empty();
+  //         }
+  //       }
+  //     });
+  //   }else{
+  //     $("#kode_subkriteria").empty();
+  //   }
+  // });
+
+  $(document).ready(function() {
+    $('#kode_kriteria').on('change', function() {
+       var kriteriaID = $(this).val();
+       $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+       if(kriteriaID) {
+           $.ajax({
+               url: '/getsubkriteria/'+kriteriaID,
+               type: "GET",
+               dataType: "json",
+               success:function(response)
+               {
+                 if(response){
+                    $('#kode_subkriteria').empty();
+                    $('#kode_subkriteria').append('<option hidden>Choose Course</option>'); 
+                    $.each(response, function(key, subkriteria){
+                      // console.log(subkriteria);
+                      $.each(subkriteria, function (key, value) {
+                        $('select[name="kode_subkriteria"]').append('<option value="'+ value.kode_subkriteria +'">' + value.nama_subkriteria+ '</option>');
+                      });
+                    });
+                }else{
+                    $('#kode_subkriteria').empty();
+                }
+             }
+           });
+       }else{
+         $('#kode_subkriteria').empty();
+       }
+    });
+    });

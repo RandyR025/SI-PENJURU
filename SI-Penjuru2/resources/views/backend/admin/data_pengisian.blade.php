@@ -147,7 +147,7 @@ Kelola Data
   <div class="modal-dialog modal-lg modal-dialog-scrollable mt-3">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Tambah Pengguna</h5>
+        <h5 class="modal-title">Tambah Pengisian</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -170,12 +170,20 @@ Kelola Data
               <span class="text-danger error-text kode_subkriteria_error"></span>
             </div> -->
             <div class="mb-3">
+              <label class="form-label">Kriteria</label>
+              <div>
+                <select name="kode_kriteria" class="kode_kriteria form-control" id="kode_kriteria">
+                @foreach ($kriteria as $item)
+                  <option value="{{ $item->kode_kriteria }}">{{ $item->nama_kriteria }}</option>
+                @endforeach
+                </select>
+              </div>
+              <span class="text-danger error-text kriteria_error"></span>
+            </div>
+            <div class="mb-3">
               <label class="form-label">Nama Subkriteria</label>
               <div>
-                <select name="kode_subkriteria" class="kode_subkriteria form-control" id="edit_kodesubkriteria">
-                @foreach ($subkriteria as $item)
-                  <option value="{{ $item->kode_subkriteria }}">{{ $item->nama_subkriteria }}</option>
-                @endforeach
+                <select name="kode_subkriteria" class="kode_subkriteria form-control" id="kode_subkriteria">
                 </select>
               </div>
               <span class="text-danger error-text kode_subkriteria_error"></span>

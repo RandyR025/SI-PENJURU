@@ -1,24 +1,47 @@
-// window.console.log = function () {
-//     console.warn("%cSTOP RIGHT YOU ARE CRIMINAL SCUM!", "font: 3em sans-serif; color: yellow; background-color: red;");
-//     console.warn("%cAttempting to manipulate anything in this system will lead to serious reperation.", "font: 2em sans-serif; color: yellow; background-color: red;");
-//     console.warn("You are attempting to use a feature intended for web developers.");
-//     console.warn("If you are here by mistake, press F12 and never look back.")
-//     window.console.log = function () {
-//         return null;
-//     }
-// }
-console.log("Trying to warn you of using a feature intended for web developers!");
+// $(document).ready(function() {
+//     $(".option").on('change', function() {
+//        var optionID = $(this).val();
+//        $.ajaxSetup({
+//         headers: {
+//           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
+//             $.ajax({
+//               url: '/gethasilpenilaian',
+//               method: "POST",
+//               data:{optionID: optionID},
+//               dataType: "json",
+//               contentType: false,
+//               processData: false,
+//                success:function(data)
+//                {
+//                   console.log(data);
 
-function MoveQuestion(id){
-    $('.nav-item a[href="#q' + id + '"]').tab('show');
-}
+//              }
+//            });
+//     });
+//     });
 
-function enableQuiz() {
-    $(".disabled").removeClass("disabled");
-    $("#v-pills-welcome-tab").addClass("disabled");
-    $('.nav-item a[href="#q1"]').tab('show');
-}
-
-function theFinalCountdown(){
-    
+function handleClick(myRadio, myPengisian) {
+  //  alert(myPengisian);
+  
+  $.ajaxSetup({
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    },
+  });
+  var optionID = myRadio.value;
+  var pengisianID = myPengisian;
+  var s = {
+    "option_id":optionID,
+    "pengisian_id":pengisianID
+  }
+  $.ajax({
+        url: "/gethasilpenilaian",
+        type: "POST",
+        data: s,
+        success: function (data) {
+            console.log(data);
+        },
+    });
 }

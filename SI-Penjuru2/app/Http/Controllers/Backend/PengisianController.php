@@ -77,13 +77,14 @@ class PengisianController extends Controller
     {
         $pengisian = DB::table('pengisian')->join('penilaian', 'pengisian.id_penilaian', '=', 'penilaian.id_penilaian')->where('penilaian.id_penilaian',$id)->join('subkriteria', 'pengisian.kode_subkriteria', '=', 'subkriteria.kode_subkriteria')->get();
         $penilaian = DB::table('penilaian')->where('id_penilaian', $id)->get();
+        $kriteria = DB::table('kriteria')->get();
         $subkriteria = DB::table('subkriteria')->get();
         $admin = DB::table('admin')->join('users', 'admin.user_id', '=', 'users.id')->find(Auth::user()->id);
         $guru = DB::table('guru')->join('users', 'guru.user_id', '=', 'users.id')->find(Auth::user()->id);
         $wali = DB::table('wali')->join('users', 'wali.user_id', '=', 'users.id')->find(Auth::user()->id);
         $no = 1;
         // dd($pengisian);
-        return view('backend/admin.data_pengisian', compact('admin','guru', 'wali', 'pengisian', 'no', 'penilaian','subkriteria'));
+        return view('backend/admin.data_pengisian', compact('admin','guru', 'wali', 'pengisian', 'no', 'penilaian','subkriteria','kriteria'));
     }
 
     /**
@@ -163,5 +164,10 @@ class PengisianController extends Controller
             'status' => 200,
             'message' => 'Data Berhasil Di Hapus !!!',
         ]);
+    }
+
+    public function getSubkriteria($id){
+        $subkriteria = DB::table('subkriteria')->where('kode_kriteria','=',$id)->get();
+        return response()->json(['subkriteria'=>$subkriteria]);
     }
 }
