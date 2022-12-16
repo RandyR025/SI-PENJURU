@@ -16,7 +16,7 @@ class CreatePvKriteriaTable extends Migration
         Schema::create('pv_kriteria', function (Blueprint $table) {
             $table->id();
             $table->string('id_kriteria')->nullable();
-            $table->string('nilai')->nullable();
+            $table->string('nilai_kriteria')->nullable();
             $table->foreign('id_kriteria')
             ->references('kode_kriteria')
             ->on('kriteria')

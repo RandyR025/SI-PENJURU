@@ -59,7 +59,7 @@ function getSubkriteriaNama($no_urut,$id)
 
 function getKriteriaPv($id_kriteria)
 {
-    $query = DB::table('pv_kriteria')->select('nilai')->where('id_kriteria','=',$id_kriteria)->get();
+    $query = DB::table('pv_kriteria')->select('nilai_kriteria')->where('id_kriteria','=',$id_kriteria)->get();
     foreach ($query as $row) {
         $pv = $row->nilai;
     }
@@ -68,7 +68,7 @@ function getKriteriaPv($id_kriteria)
 
 function getSubkriteriaPv($id_subkriteria, $id_kriteria)
 {
-    $query = DB::table('pv_subkriteria')->select('nilai')->where([['id_subkriteria','=',$id_subkriteria],['id_kriteria','=',$id_kriteria],])->get();
+    $query = DB::table('pv_subkriteria')->select('nilai_subkriteria')->where([['id_subkriteria','=',$id_subkriteria],['id_kriteria','=',$id_kriteria],])->get();
     foreach ($query as $row) {
         $pv = $row->nilai;
     }
@@ -84,12 +84,12 @@ function inputKriteriaPv($id_kriteria,$pv)
     if ($query == 0) {
         $queryy = new Pvkriteria;
         $queryy->id_kriteria = $id_kriteria;
-        $queryy->nilai = $pv;
+        $queryy->nilai_kriteria = $pv;
         $queryy->save();
     }else {
         Pvkriteria::where([
             ['id_kriteria','=',$id_kriteria],
-        ])->update(['nilai'=> $pv]);
+        ])->update(['nilai_kriteria'=> $pv]);
     }
 }
 
@@ -103,14 +103,14 @@ function inputSubkriteriaPv($id_subkriteria,$pv,$id_kriteria)
     if ($query == 0) {
         $queryy = new Pvsubkriteria;
         $queryy->id_subkriteria = $id_subkriteria;
-        $queryy->nilai = $pv;
+        $queryy->nilai_subkriteria = $pv;
         $queryy->id_kriteria = $id_kriteria;
         $queryy->save();
     }else {
         Pvsubkriteria::where([
             ['id_subkriteria','=',$id_subkriteria],
             ['id_kriteria','=',$id_kriteria],
-        ])->update(['nilai'=> $pv]);
+        ])->update(['nilai_subkriteria'=> $pv]);
     }
 }
 

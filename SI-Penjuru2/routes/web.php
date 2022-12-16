@@ -123,6 +123,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/penilaiankinerjaguru',[PenilaianKinerjaGuruController::class, 'index'])->name('penilaiankinerjaguru');
         Route::get('/detailkinerjaguru/{id}',[PenilaianKinerjaGuruController::class, 'show'])->name('detailkinerjaguru');
         Route::post('/gethasilpenilaian', [PenilaianKinerjaGuruController::class, 'hasilpilihan'])->name('gethasilpenilaian');
+        Route::get('/gettotalnilai', [PenilaianKinerjaGuruController::class, 'totalnilai'])->name('gettotalnilai');
     });
 });
 Route::get('/masukLogin', [LoginController::class, 'index'])->name('masuklogin');

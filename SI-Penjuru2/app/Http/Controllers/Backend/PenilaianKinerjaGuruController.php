@@ -135,4 +135,34 @@ class PenilaianKinerjaGuruController extends Controller
         ])->update(['kode_pilihan'=> $request->option_id]);
         }
     }
+
+    public function totalnilai(){
+        // $nilaikriteria = DB::table('kriteria')->join('pv_kriteria', 'kriteria.kode_kriteria','=','pv_kriteria.id_kriteria')->get();
+        // foreach ($nilaikriteria as $keykriteria => $valuekriteria) {
+        //     $nilaisubkriteria[$keykriteria] = DB::table('subkriteria')->join('pv_subkriteria','subkriteria.kode_subkriteria','=','pv_subkriteria.id_subkriteria')->where('subkriteria.kode_kriteria','=',$valuekriteria->kode_kriteria)->get();
+        //     foreach ($nilaisubkriteria as $keysubkriteria => $valuesubkriteria) {
+        //         foreach ($valuesubkriteria as $keynilaisub => $valuenilaisub) {
+        //             $nilaipengisian[$keynilaisub] = DB::table('pilihan')->join('hasilpilihan','pilihan.kode_pilihan','=','hasilpilihan.kode_pilihan')->where('hasilpilihan.user_id','=',Auth::user()->id)->join('pengisian','pilihan.kode_pengisian','=','pengisian.kode_pengisian')->where('pengisian.kode_subkriteria',$valuenilaisub->kode_subkriteria)->get();
+        //         }
+        //     }
+        //     dd($nilaipengisian);
+        // }
+
+            $coba = DB::table('pengisian')->get();
+            $nilai = 0;
+            foreach ($coba as $key => $value) {
+                $coba1[$key] = DB::table('hasilpilihan')
+                ->where('hasilpilihan.kode_pengisian','=',$value->kode_pengisian)
+                ->join('pilihan','hasilpilihan.kode_pilihan','=','pilihan.kode_pilihan')
+                ->join('pengisian','hasilpilihan.kode_pengisian','=','pengisian.kode_pengisian')
+                ->join('subkriteria','pengisian.kode_subkriteria','=','subkriteria.kode_subkriteria')
+                ->join('kriteria','subkriteria.kode_kriteria','=','kriteria.kode_kriteria')
+                ->join('pv_subkriteria','subkriteria.kode_subkriteria','=','pv_subkriteria.id_subkriteria')
+                ->join('pv_kriteria','kriteria.kode_kriteria','=','pv_kriteria.id_kriteria')->first();
+                $nilai = $nilai + $coba1[$key]->points + $coba1[$key]->nilai_kriteria + $coba1[$key]->nilai_subkriteria ;   
+            }
+
+            
+            dd($coba1);
+    }
 }

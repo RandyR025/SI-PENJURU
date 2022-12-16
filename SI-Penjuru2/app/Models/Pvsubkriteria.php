@@ -12,7 +12,7 @@ class Pvsubkriteria extends Model
     protected $PrimaryKey = 'id';
     protected $fillable = [
         'id_subkriteria',
-        'nilai',
+        'nilai_subkriteria',
         'id_kriteria',
     ];
 }

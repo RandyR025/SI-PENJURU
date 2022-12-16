@@ -67,10 +67,12 @@ Penilaian
     {{$coba1->links('vendor.pagination.bootstrap-4')}}
     <div class="row" style="margin-top: 100px;">
         <div class="col-12 text-center">
-            <button class="btn btn-outline-primary btn-icon btn-icon-end sw-25">
-                <span>Done</span>
-                <i data-acorn-icon="check"></i>
-            </button>
+            <a href="/gettotalnilai">
+                <button class="btn btn-outline-primary btn-icon btn-icon-end sw-25">
+                    <span>Done</span>
+                    <i data-acorn-icon="check"></i>
+                </button>
+            </a>
         </div>
     </div>
 

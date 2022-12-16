@@ -16,7 +16,7 @@ class CreatePvSubkriteriaTable extends Migration
         Schema::create('pv_subkriteria', function (Blueprint $table) {
             $table->id();
             $table->string('id_subkriteria')->nullable();
-            $table->string('nilai')->nullable();
+            $table->string('nilai_subkriteria')->nullable();
             $table->string('id_kriteria')->nullable();
             $table->foreign('id_subkriteria')
             ->references('kode_subkriteria')
