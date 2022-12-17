@@ -71,9 +71,24 @@ Penilaian
                         </div>
                     </div>
                 </div> -->
+                <?php
+                
+                if (cekPenilaian($item->id_penilaian, Auth::user()->id)) {
+                    ?>
                 <div class="d-flex flex-row justify-content-between w-100 w-sm-50 w-xl-100">
-                    <a href="{{ route('detailkinerjaguru', $item->id_penilaian) }}" class="btn btn-outline-primary w-100 me-1 btn-sm">Start</a>
+                    <a href="{{ route('detailkinerjaguru', $item->id_penilaian) }}" class="btn btn-outline-primary w-100 me-1 btn-sm">Sudah Di Isi</a>
                 </div>
+                    <?php
+                    
+                }else {
+                    ?>
+                    <div class="d-flex flex-row justify-content-between w-100 w-sm-50 w-xl-100">
+                        <a href="{{ route('detailkinerjaguru', $item->id_penilaian) }}" class="btn btn-outline-primary w-100 me-1 btn-sm">Start</a>
+                    </div>
+                    <?php
+                }
+                
+                ?>
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Hasil;
 use App\Models\Hasilpilihan;
 use App\Models\Perbandingankriteria;
 use App\Models\Perbandingansubkriteria;
@@ -444,6 +445,19 @@ function hasilPilihan($pilihan,$user){
     $query = Hasilpilihan::where([
         ['user_id','=',$user],
         ['kode_pilihan','=',$pilihan],
+    ])->count();
+    if ($query == 1) {
+        return true;
+    }else {
+        return false;
+    }
+}
+
+
+function cekPenilaian($penilaian, $user){
+    $query = Hasil::where([
+        ['user_id','=',$user],
+        ['id_penilaian','=',$penilaian],
     ])->count();
     if ($query == 1) {
         return true;

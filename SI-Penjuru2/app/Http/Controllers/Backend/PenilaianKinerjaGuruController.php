@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Hasil;
 use App\Models\Hasilpilihan;
 use App\Models\Pengisian;
 use App\Models\Penilaian;
@@ -136,7 +137,7 @@ class PenilaianKinerjaGuruController extends Controller
         }
     }
 
-    public function totalnilai(){
+    public function totalnilai($id){
         // $nilaikriteria = DB::table('kriteria')->join('pv_kriteria', 'kriteria.kode_kriteria','=','pv_kriteria.id_kriteria')->get();
         // foreach ($nilaikriteria as $keykriteria => $valuekriteria) {
         //     $nilaisubkriteria[$keykriteria] = DB::table('subkriteria')->join('pv_subkriteria','subkriteria.kode_subkriteria','=','pv_subkriteria.id_subkriteria')->where('subkriteria.kode_kriteria','=',$valuekriteria->kode_kriteria)->get();
@@ -148,7 +149,7 @@ class PenilaianKinerjaGuruController extends Controller
         //     dd($nilaipengisian);
         // }
 
-            $coba = DB::table('pengisian')->get();
+            $coba = DB::table('pengisian')->where('id_penilaian','=',$id)->get();
             $nilai = 0;
             foreach ($coba as $key => $value) {
                 $coba1[$key] = DB::table('hasilpilihan')
@@ -161,8 +162,14 @@ class PenilaianKinerjaGuruController extends Controller
                 ->join('pv_kriteria','kriteria.kode_kriteria','=','pv_kriteria.id_kriteria')->first();
                 $nilai = $nilai + $coba1[$key]->points + $coba1[$key]->nilai_kriteria + $coba1[$key]->nilai_subkriteria ;   
             }
-
             
-            dd($coba1);
+
+            $total = new Hasil;
+            $total->totals = $nilai;
+            $total->user_id = Auth::user()->id;
+            $total->id_penilaian = $id;
+            $total->save();
+            
+            // dd($coba1);
     }
 }
