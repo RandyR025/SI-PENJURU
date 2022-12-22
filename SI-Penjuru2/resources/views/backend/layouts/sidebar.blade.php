@@ -35,11 +35,11 @@
     </li>
     @if (auth()->user()->level == "admin")
     <li>
-      <a href="#apps" data-href="Apps.html" class="{{ Route::is('datapengguna')||Route::is('dataguru')||Route::is('datakriteria')||Route::is('showkriteria')||Route::is('datapenilaian') ? 'active' : '' }}">
+      <a href="#keloladata" data-href="keloladata.html" class="{{ Route::is('datapengguna')||Route::is('dataguru')||Route::is('datakriteria')||Route::is('showkriteria')||Route::is('datapenilaian') ? 'active' : '' }}">
         <i data-cs-icon="screen" class="icon" data-cs-size="18"></i>
         <span class="label">Kelola Data</span>
       </a>
-      <ul id="apps">
+      <ul id="keloladata">
         <li>
           <a href="{{route('datapengguna')}}" class="{{ Route::is('datapengguna') ? 'active' : '' }}">
             <span class="label">Data Pengguna</span>
@@ -74,19 +74,37 @@
       </ul>
     </li>
     <li>
-      <a href="#pages" class="{{ Route::is('perbandingankriteria') || Route::is('perbandingansubkriteria') ? 'active' : '' }}">
+      <a href="#perhitungan" class="{{ Route::is('perbandingankriteria') || Route::is('perbandingansubkriteria') || Route::is('perbandinganproses') || Route::is('subperbandinganproses') || Route::is('showperbandingansubkriteria') ? 'active' : '' }}">
         <i data-cs-icon="notebook-1" class="icon" data-cs-size="18"></i>
         <span class="label">Perhitungan</span>
       </a>
-      <ul id="pages">
+      <ul id="perhitungan">
         <li>
-          <a href="{{route('perbandingankriteria')}}" class="{{ Route::is('perbandingankriteria') ? 'active' : '' }}">
+          <a href="{{route('perbandingankriteria')}}" class="{{ Route::is('perbandingankriteria') || Route::is('perbandinganproses') ? 'active' : '' }}">
             <span class="label">Perbandingan Kriteria</span>
           </a>
         </li>
         <li>
-          <a href="{{route('perbandingansubkriteria')}}" class="{{ Route::is('perbandingansubkriteria') ? 'active' : '' }}" data-href="Pages.Authentication.html">
+          <a href="{{route('perbandingansubkriteria')}}" class="{{ Route::is('perbandingansubkriteria') || Route::is('showperbandingansubkriteria') || Route::is('subperbandinganproses') ? 'active' : '' }}" data-href="Pages.Authentication.html">
             <span class="label">Perbandingan Sub Kriteria</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#hasilakhir" class="{{ Route::is('daftarpenilaianrangking') || Route::is('hasilrangkingpenilaian') || Route::is('daftarpenilaian') ? 'active' : '' }}">
+        <i data-cs-icon="notebook-1" class="icon" data-cs-size="18"></i>
+        <span class="label">Hasil Akhir</span>
+      </a>
+      <ul id="hasilakhir">
+        <li>
+          <a href="{{route('daftarpenilaian')}}" class="{{ Route::is('daftarpenilaian') ? 'active' : '' }}">
+            <span class="label">Cek Jawaban</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{route('daftarpenilaianrangking')}}" class="{{ Route::is('daftarpenilaianrangking') || Route::is('hasilrangkingpenilaian') ? 'active' : '' }}" data-href="Pages.Authentication.html">
+            <span class="label">Rangking</span>
           </a>
         </li>
       </ul>
@@ -95,11 +113,11 @@
   @endif
   @if (auth()->user()->level == "guru")
   <li>
-      <a href="#apps" data-href="Apps.html" class="{{ Route::is('penilaiankinerjaguru') ? 'active' : '' }}">
+      <a href="#keloladata" data-href="keloladata.html" class="{{ Route::is('penilaiankinerjaguru') ? 'active' : '' }}">
         <i data-cs-icon="screen" class="icon" data-cs-size="18"></i>
         <span class="label">Kelola Data</span>
       </a>
-      <ul id="apps">
+      <ul id="keloladata">
         <li>
           <a href="{{route('penilaiankinerjaguru')}}" class="{{ Route::is('penilaiankinerjaguru') ? 'active' : '' }}">
             <span class="label">Penilaian Kinerja Guru</span>

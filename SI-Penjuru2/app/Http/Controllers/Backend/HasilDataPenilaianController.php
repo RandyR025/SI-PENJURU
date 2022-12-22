@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class HasilController extends Controller
+class HasilDataPenilaianController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class HasilController extends Controller
         $guru = DB::table('guru')->join('users', 'guru.user_id', '=', 'users.id')->find(Auth::user()->id);
         $wali = DB::table('wali')->join('users', 'wali.user_id', '=', 'users.id')->find(Auth::user()->id);
         // dd($penilaian);
-        return view('backend/admin.hasil_data_rangking', compact('admin','guru', 'wali','penilaian'));
+        return view('backend/admin.hasil_data_penilaian', compact('admin','guru', 'wali','penilaian'));
     }
 
     /**
@@ -56,10 +56,11 @@ class HasilController extends Controller
         $admin = DB::table('admin')->join('users', 'admin.user_id', '=', 'users.id')->find(Auth::user()->id);
         $guru = DB::table('guru')->join('users', 'guru.user_id', '=', 'users.id')->find(Auth::user()->id);
         $wali = DB::table('wali')->join('users', 'wali.user_id', '=', 'users.id')->find(Auth::user()->id);
-        $hasil = DB::table('hasil')->join('users', 'hasil.user_id','=','users.id')->join('guru', 'users.id', '=', 'guru.user_id')->where('id_penilaian','=',$id)->orderBy('totals','desc')->get();
-        // dd($hasil);
+        $hasil = collect(DB::table('hasilpilihan')->join('users', 'hasilpilihan.user_id','=','users.id')->join('pengisian','hasilpilihan.kode_pengisian','=','pengisian.kode_pengisian')->where('pengisian.id_penilaian','=',$id)->get()->groupBy('hasilpilihan.user_id'));
+        // $pengisian = collect(DB::table('pilihan')->join('pengisian', 'pilihan.kode_pengisian', '=', 'pengisian.kode_pengisian')->join('penilaian', 'pengisian.id_penilaian', '=', 'penilaian.id_penilaian')->where('penilaian.id_penilaian',$id)->join('subkriteria', 'pengisian.kode_subkriteria', '=', 'subkriteria.kode_subkriteria')->join('kriteria', 'subkriteria.kode_kriteria', '=', 'kriteria.kode_kriteria')->get()->groupBy('kode_pengisian'));
+        dd($hasil);
         $no = 1;
-        return view('backend/admin.hasil_rangking', compact('admin','guru', 'wali','hasil','no'));
+        return view('backend/admin.hasil_penilaian', compact('admin','guru', 'wali','hasil','no'));
     }
 
     /**

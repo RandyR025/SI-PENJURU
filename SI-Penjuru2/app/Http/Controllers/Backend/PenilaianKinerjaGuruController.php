@@ -70,6 +70,7 @@ class PenilaianKinerjaGuruController extends Controller
         $wali = DB::table('wali')->join('users', 'wali.user_id', '=', 'users.id')->find(Auth::user()->id);
 
         // $pengisian = collect(DB::table('pilihan')->join('pengisian', 'pilihan.kode_pengisian', '=', 'pengisian.kode_pengisian')->join('penilaian', 'pengisian.id_penilaian', '=', 'penilaian.id_penilaian')->where('penilaian.id_penilaian',$id)->join('subkriteria', 'pengisian.kode_subkriteria', '=', 'subkriteria.kode_subkriteria')->join('kriteria', 'subkriteria.kode_kriteria', '=', 'kriteria.kode_kriteria')->get()->groupBy('kode_pengisian'));
+        $jumlah = Pengisian::with('penilaian')->where('id_penilaian','=',$id)->get()->count();
         $coba1 = Pengisian::with('penilaian')->where('id_penilaian','=',$id)->paginate(1);
         foreach ($coba1 as $key => $value) {
             $coba[$key] = Pilihan::with('pengisian')->where('kode_pengisian','=',$value->kode_pengisian)->get();
@@ -77,7 +78,7 @@ class PenilaianKinerjaGuruController extends Controller
         // dd($coba);
         $hasilpilihan = DB::table('hasilpilihan')->where('user_id','=',Auth::user()->id)->get();
         // dd($hasilpilihan);
-        return view('backend/guru.detailkinerjaguru', compact('admin','guru', 'wali','coba','coba1','hasilpilihan'));
+        return view('backend/guru.detailkinerjaguru', compact('admin','guru', 'wali','coba','coba1','hasilpilihan','jumlah'));
     }
 
     /**
@@ -154,22 +155,24 @@ class PenilaianKinerjaGuruController extends Controller
             foreach ($coba as $key => $value) {
                 $coba1[$key] = DB::table('hasilpilihan')
                 ->where('hasilpilihan.kode_pengisian','=',$value->kode_pengisian)
+                ->where('user_id','=',Auth::user()->id)
                 ->join('pilihan','hasilpilihan.kode_pilihan','=','pilihan.kode_pilihan')
                 ->join('pengisian','hasilpilihan.kode_pengisian','=','pengisian.kode_pengisian')
                 ->join('subkriteria','pengisian.kode_subkriteria','=','subkriteria.kode_subkriteria')
                 ->join('kriteria','subkriteria.kode_kriteria','=','kriteria.kode_kriteria')
                 ->join('pv_subkriteria','subkriteria.kode_subkriteria','=','pv_subkriteria.id_subkriteria')
                 ->join('pv_kriteria','kriteria.kode_kriteria','=','pv_kriteria.id_kriteria')->first();
-                $nilai = $nilai + $coba1[$key]->points + $coba1[$key]->nilai_kriteria + $coba1[$key]->nilai_subkriteria ;   
+                $nilai = $nilai + $coba1[$key]->points * $coba1[$key]->nilai_kriteria * $coba1[$key]->nilai_subkriteria ;   
             }
             
 
             $total = new Hasil;
-            $total->totals = $nilai;
+            $total->totals = round($nilai,5);
             $total->user_id = Auth::user()->id;
             $total->id_penilaian = $id;
             $total->save();
             
             // dd($coba1);
+            return redirect()->route('penilaiankinerjaguru');
     }
 }

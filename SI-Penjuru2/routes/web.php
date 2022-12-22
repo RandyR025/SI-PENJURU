@@ -4,6 +4,8 @@ use App\Http\Controllers\Backend\RegisterController ;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\DataGuruController;
 use App\Http\Controllers\Backend\DataPenggunaController;
+use App\Http\Controllers\Backend\HasilController;
+use App\Http\Controllers\Backend\HasilDataPenilaianController;
 use App\Http\Controllers\Backend\KriteriaController;
 use App\Http\Controllers\Backend\LoginController;
 use App\Http\Controllers\Backend\PengisianController;
@@ -115,6 +117,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/show-perbandingansubkriteria/{id}',[PerbandingansubkriteriaController::class, 'show'])->name('showperbandingansubkriteria');
         Route::post('/subperbandinganproses', [PerbandingansubkriteriaController::class, 'proses'])->name('subperbandinganproses');
         /* End Perbandingan SubKriteria */
+
+        /* Start Hasil Penilaian */
+        Route::get('/daftarpenilaian', [HasilDataPenilaianController::class, 'index'])->name('daftarpenilaian');
+        Route::get('/hasilpenilaian/{id}', [HasilDataPenilaianController::class, 'show'])->name('hasilpenilaian');
+
+        Route::get('/daftarpenilaianrangking', [HasilController::class, 'index'])->name('daftarpenilaianrangking');
+        Route::get('/hasilrangkingpenilaian/{id}', [HasilController::class, 'show'])->name('hasilrangkingpenilaian');
+        /* End Hasil Penilaian */
     });
     Route::group(['middleware' => ['cek_login:guru']], function () {
         Route::get('/dashboardguru', [DashboardController::class, 'index'])->name('dashboardguru');

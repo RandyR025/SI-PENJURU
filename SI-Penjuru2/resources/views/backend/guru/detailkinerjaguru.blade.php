@@ -26,13 +26,13 @@ Penilaian
         @foreach ($coba1 as $key => $item)
             <div class="d-flex flex-row align-content-center align-items-center mb-5">
                 <div class="sw-5 me-4">
-                    <div class="border border-1 border-primary rounded-xl sw-5 sh-5 text-primary d-flex justify-content-center align-items-center">{{$questionNum++}}</div>
+                    <div class="border border-1 border-primary rounded-xl sw-5 sh-5 text-primary d-flex justify-content-center align-items-center">{{ $key + $coba1->firstItem() }}</div>
                 </div>
                 <div class="heading mb-0">
                     {{$item['nama_pengisian']}}
                 </div>
             </div>
-            @foreach ($coba[$key] as $key => $p)
+            @foreach ($coba[$key] as $keycoba => $p)
             <div class="d-flex flex-row align-content-center align-items-center position-relative mb-3">
                 <div class="sw-5 me-4 d-flex justify-content-center flex-grow-0 flex-shrink-0">
                     <div class="d-flex justify-content-center align-items-center">
@@ -60,12 +60,9 @@ Penilaian
                     Chocolate bar sugar plum gingerbread. Gingerbread tiramisu fruitcake icing brownie. Marshmallow carrot cake jelly-o cotton candy danish. Wafer danish cupcake chocolate sesame snaps dessert marzipan.
                 </div>
             </div> -->
-
-            @endforeach
-        </div>
-    </div>
-    {{$coba1->links('vendor.pagination.bootstrap-4')}}
-    <div class="row" style="margin-top: 100px;">
+            
+            @if($jumlah == $key + $coba1->firstItem())
+            <div class="row" style="margin-top: 100px;">
         <div class="col-12 text-center">
             <a href="{{ route('gettotalnilai', $item->id_penilaian)}}">
                 <button class="btn btn-outline-primary btn-icon btn-icon-end sw-25">
@@ -75,6 +72,12 @@ Penilaian
             </a>
         </div>
     </div>
+            @endif
+
+            @endforeach
+        </div>
+    </div>
+    {{$coba1->links('vendor.pagination.bootstrap-4')}}
 
 <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
 <script src="{{asset('backend/js/vendor/jquery-3.5.1.min.js')}}"></script>

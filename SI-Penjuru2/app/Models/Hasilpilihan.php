@@ -15,5 +15,6 @@ class Hasilpilihan extends Model
         'kode_pilihan',
         'kode_pengisian',
         'user_id',
+        'id_penilaian',
     ];
 }
