@@ -121,6 +121,9 @@ Route::group(['middleware' => ['auth']], function () {
         /* Start Hasil Penilaian */
         Route::get('/daftarpenilaian', [HasilDataPenilaianController::class, 'index'])->name('daftarpenilaian');
         Route::get('/hasilpenilaian/{id}', [HasilDataPenilaianController::class, 'show'])->name('hasilpenilaian');
+        Route::get('/hasilpenilaiancek/{id}/cek/{pen}', [HasilDataPenilaianController::class, 'cek'])->name('hasilpenilaiancek');
+        Route::post('/penilaiancek', [HasilDataPenilaianController::class, 'hasilcek'])->name('penilaiancek');
+        Route::get('/gettotalnilaicek/{id}/total/{user}', [HasilDataPenilaianController::class, 'totalnilai'])->name('gettotalnilaicek');
 
         Route::get('/daftarpenilaianrangking', [HasilController::class, 'index'])->name('daftarpenilaianrangking');
         Route::get('/hasilrangkingpenilaian/{id}', [HasilController::class, 'show'])->name('hasilrangkingpenilaian');

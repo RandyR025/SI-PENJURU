@@ -166,11 +166,22 @@ class PenilaianKinerjaGuruController extends Controller
             }
             
 
-            $total = new Hasil;
-            $total->totals = round($nilai,5);
-            $total->user_id = Auth::user()->id;
-            $total->id_penilaian = $id;
-            $total->save();
+            $query = Hasil::where([
+                ['user_id','=',Auth::user()->id],
+                ['id_penilaian','=',$id],
+            ])->count();
+            if ($query == 0) {     
+                $total = new Hasil;
+                $total->totals = round($nilai,5);
+                $total->user_id = Auth::user()->id;
+                $total->id_penilaian = $id;
+                $total->save();
+            }else {
+                Hasil::where([
+                    ['user_id','=',Auth::user()->id],
+                    ['id_penilaian','=',$id],
+                ])->update(['totals'=> round($nilai,5)]);
+            }
             
             // dd($coba1);
             return redirect()->route('penilaiankinerjaguru');
