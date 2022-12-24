@@ -42,7 +42,7 @@ Kelola Data
                 <div class="dropdown-menu shadow dropdown-menu-end">
                     <button class="dropdown-item export-copy" type="button">Copy</button>
                     <button class="dropdown-item export-excel" type="button">Excel</button>
-                    <button class="dropdown-item export-cvs" type="button">Cvs</button>
+                    <a href="{{route('hasilpenilaiancetakpdf',$penilaian[0]->id_penilaian)}}" class="dropdown-item export-cvs" type="button">PDF</a>
                 </div>
             </div>
             <!-- Export Dropdown End -->
@@ -58,16 +58,20 @@ Kelola Data
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
-                    <th>Totals</th>
+                    @foreach($pengisian as $data)
+                    <th>{{$data->nama_pengisian}}</th>
+                    @endforeach
                     <th>Cek Jawaban</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($hasil as $item)
+                @foreach ($coba1 as $key => $item)
                 <tr>
                     <td>{{ $no++ }}</td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->totals }}</td>
+                    @foreach ($coba[$key] as $keycoba => $p)
+                    <td>{{$p->nama_pilihan}} ({{ $p->points }})</td>
+                    @endforeach
                     <td>
                         <a href="{{ route('hasilpenilaiancek', [$item->user_id,$item->id_penilaian]) }}" class="btn btn-icon btn-icon-only btn-outline-secondary mb-1" data-bs-placement="top" titte data-bs-original-title="Edit" data-bs-toggle="tooltip">
                             <i class="fa-regular fa-eye"></i>

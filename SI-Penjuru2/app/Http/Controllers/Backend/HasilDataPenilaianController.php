@@ -7,6 +7,8 @@ use App\Models\Hasil;
 use App\Models\Hasilpilihan;
 use App\Models\Pengisian;
 use App\Models\Pilihan;
+// use Barryvdh\DomPDF\PDF;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -65,7 +67,17 @@ class HasilDataPenilaianController extends Controller
         // dd($hasil);
         $penilaian = DB::table('penilaian')->where('id_penilaian', $id)->get();
         $no = 1;
-        return view('backend/admin.hasil_penilaian', compact('admin','guru', 'wali','hasil','no','penilaian'));
+        // $coba1 = Pengisian::with('penilaian')->where('id_penilaian','=',$id)->get();
+        // foreach ($coba1 as $key => $value) {
+        //     $coba[$key] = DB::table('hasilpilihan')->join('pilihan', 'hasilpilihan.kode_pilihan','=','pilihan.kode_pilihan')->where('hasilpilihan.kode_pengisian','=',$value->kode_pengisian)->join('pengisian','pilihan.kode_pengisian','=','pengisian.kode_pengisian')->get();
+        // }
+        $coba1 = DB::table('users')->join('hasil','users.id','=','hasil.user_id')->where('hasil.id_penilaian','=',$id)->get();
+        foreach ($coba1 as $key => $value) {
+            $coba[$key] = DB::table('hasilpilihan')->join('pilihan', 'hasilpilihan.kode_pilihan','=','pilihan.kode_pilihan')->where('hasilpilihan.user_id','=',$value->user_id)->join('pengisian','pilihan.kode_pengisian','=','pengisian.kode_pengisian')->get();
+        }
+        $pengisian = DB::table('pengisian')->where('id_penilaian','=',$id)->get();
+        // dd($coba);
+        return view('backend/admin.hasil_penilaian', compact('admin','guru', 'wali','hasil','no','penilaian','coba1','coba','pengisian'));
     }
 
     /**
@@ -191,5 +203,23 @@ class HasilDataPenilaianController extends Controller
             
             // dd($coba1);
             return redirect()->route('hasilpenilaian',$id);
+    }
+    public function cetak_pdf($id){
+        $hasil = DB::table('hasil')->join('users', 'hasil.user_id','=','users.id')->join('penilaian','hasil.id_penilaian','=','penilaian.id_penilaian')->where('penilaian.id_penilaian','=',$id)->get();
+        // $pengisian = collect(DB::table('pilihan')->join('pengisian', 'pilihan.kode_pengisian', '=', 'pengisian.kode_pengisian')->join('penilaian', 'pengisian.id_penilaian', '=', 'penilaian.id_penilaian')->where('penilaian.id_penilaian',$id)->join('subkriteria', 'pengisian.kode_subkriteria', '=', 'subkriteria.kode_subkriteria')->join('kriteria', 'subkriteria.kode_kriteria', '=', 'kriteria.kode_kriteria')->get()->groupBy('kode_pengisian'));
+        // dd($hasil);
+        $penilaian = DB::table('penilaian')->where('id_penilaian', $id)->get();
+        $no = 1;
+        // $coba1 = Pengisian::with('penilaian')->where('id_penilaian','=',$id)->get();
+        // foreach ($coba1 as $key => $value) {
+        //     $coba[$key] = DB::table('hasilpilihan')->join('pilihan', 'hasilpilihan.kode_pilihan','=','pilihan.kode_pilihan')->where('hasilpilihan.kode_pengisian','=',$value->kode_pengisian)->join('pengisian','pilihan.kode_pengisian','=','pengisian.kode_pengisian')->get();
+        // }
+        $coba1 = DB::table('users')->join('hasil','users.id','=','hasil.user_id')->where('hasil.id_penilaian','=',$id)->get();
+        foreach ($coba1 as $key => $value) {
+            $coba[$key] = DB::table('hasilpilihan')->join('pilihan', 'hasilpilihan.kode_pilihan','=','pilihan.kode_pilihan')->where('hasilpilihan.user_id','=',$value->user_id)->join('pengisian','pilihan.kode_pengisian','=','pengisian.kode_pengisian')->get();
+        }
+        $pengisian = DB::table('pengisian')->where('id_penilaian','=',$id)->get();
+        $pdf = PDF::loadview('backend/admin.hasilpenilaian_pdf',['coba'=>$coba, 'coba1'=>$coba1, 'pengisian'=>$pengisian, 'penilaian'=>$penilaian, 'no'=>$no ,'data'=>'Laporan Hasil Penilaian']);
+        return $pdf->stream('laporan-hasil-penilaian');
     }
 }
