@@ -19,7 +19,7 @@ Kelola Data
 <div class="col-sm-12 col-md-7 col-lg-9 col-xxl-10 mb-1" style="">
   <div class="d-inline-block me-0 me-sm-3 float-start float-md-none" style="margin-left: 300px;">
     <!-- Add Button Start -->
-    <a href="#" class="btn btn-icon btn-icon-only btn-foreground-alternate shadow add-datatable" data-bs-toggle="modal" data-bs-placement="top" type="button" data-bs-delay="0" titte data-bs-original-title="Add" data-bs-target="#AddKriteriaModal">
+    <a href="#" class="btn btn-icon btn-icon-only btn-foreground-alternate shadow add-datatable" data-bs-toggle="modal" data-bs-placement="top" type="button" data-bs-delay="0" titte data-bs-original-title="Add" data-bs-target="#AddSubKriteriaModal">
       <i data-cs-icon="plus"></i>
     </a>
     <!-- Add Button End -->
@@ -124,7 +124,7 @@ Kelola Data
 </div>
 
 
-<div class="modal fade modal-close-out" id="AddKriteriaModal" role="dialog" aria-hidden="true">
+<div class="modal fade modal-close-out" id="AddSubKriteriaModal" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable mt-3">
     <div class="modal-content">
       <div class="modal-header">

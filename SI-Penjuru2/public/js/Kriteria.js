@@ -81,6 +81,9 @@ $(function(){
             $('#AddKriteriaModal').modal('hide');
             $('#AddKriteriaModal').find('input').val("");
             fetchkriteria();
+            setTimeout(function(){
+              window.location.reload();
+           }, 2000);
 
           }
 

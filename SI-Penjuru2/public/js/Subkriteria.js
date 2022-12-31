@@ -152,8 +152,8 @@ $(function(){
           $('#saveform_errList').html("")
           // $('#success_message').addClass('alert alert-success')
           // $('#success_message').text(response.message)
-          $('#AddKriteriaModal').modal('hide');
-          $('#AddKriteriaModal').find('input').val("");
+          // $('#AddKriteriaModal').modal('hide');
+          // $('#AddKriteriaModal').find('input').val("");
           const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
               confirmButton: 'btn btn-success',
@@ -168,8 +168,8 @@ $(function(){
             confirmButtonText: 'Ok',
             reverseButtons: true
           })
-          $('#AddPengisianModal').modal('hide');
-          $('#AddPengisianModal').find('input').val("");
+          $('#AddSubKriteriaModal').modal('hide');
+          $('#AddSubKriteriaModal').find('input').val("");
           setTimeout(function(){
             window.location.reload();
          }, 2000);
@@ -245,8 +245,8 @@ $(document).on("click", ".delete_subkriteria", function (e) {
         success: function (response) {
             window.location.reload();
             console.log(response);
-            $("#success_message").addClass("alert alert-success");
-            $("#success_message").text(response.message);
+            // $("#success_message").addClass("alert alert-success");
+            // $("#success_message").text(response.message);
             $("#deleteModal").modal("hide");
         },
     });
